@@ -1,9 +1,12 @@
 import "./App.css";
 import { MantineProvider } from "@mantine/core";
 import Home from "./Pages/home";
+import Login from "./Pages/login";
 import { BrowserRouter as Router } from 'react-router-dom'
+import React, {useState} from "react";
 
 function App() {
+  let [loggedIn, setLoggedIn] = useState(false)
   return (
     <Router>
       <MantineProvider
@@ -36,7 +39,7 @@ function App() {
           },
         }}
       >
-        <Home />
+        {loggedIn ? <Home/> : <Login/>}
       </MantineProvider>
     </Router>
   );
