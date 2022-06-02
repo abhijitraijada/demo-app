@@ -5,8 +5,15 @@ import { HiOutlineLightBulb } from 'react-icons/hi'
 import { IoPlayOutline } from 'react-icons/io5'
 import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone'
 import { BiTrash, BiPencil } from 'react-icons/bi'
+import { IoClose } from 'react-icons/io5'
+import { getWillFlow } from "../apis/willFlowApis";
 
-const InputControl = ({ data, handleButtonClick, step, modalMessage, setModalMessage, modalStatus, setModalStatus, setAnswer, answer, prefill, setPrefill, btnClick }) => {
+const InputControl = ({ 
+        data, handleButtonClick, step, 
+        modalMessage, setModalMessage, modalStatus, 
+        setModalStatus, setAnswer, answer, 
+        prefill, setPrefill, btnClick, willFlow
+    }) => {
     const theme = useMantineTheme();
     const [dateError, setDateError] = useState()
     const [textInputError, setTextInputError] = useState()
@@ -102,9 +109,33 @@ const InputControl = ({ data, handleButtonClick, step, modalMessage, setModalMes
                     </Group>
                 )
             }
+            const uploadFiles = (files) => {
+                let data = {
+                    "SaveDocument": "Submit",
+                    "question_id": 210000003,
+                    "uploaded_files": files
+                }
+                getWillFlow(0,data).then((response) => {
+                    console.log("Files upload response: ", response.data)
+                }, (error) => {
+                    console.log("Files upload Error: ", error)
+                })
+            }
+            const deleteFiles = (documentId, questionId) => {
+                let data = {
+                    "document_id": documentId,
+                    "question_id": questionId
+                }
+                getWillFlow(0, data).then((response) => {
+                    console.log("Delete document response: ", response.data)
+                    willFlow.set(response.data)
+                }, (error) => {
+                    console.log("Delete document error: ", error)
+                })
+            }
             return (
-                <div style={{ 'display': 'flex', 'flexDirection': 'row', 'width': '100%', "gap": "1.63vw", 'marginTop': '4vw', 'marginBottom': '4vw' }}>
-                    <Dropzone onDrop={(files) => console.log('accepted files', files)}
+                <div style={{ 'display': 'flex', 'flexDirection': 'column', 'width': '100%', "gap": "1.63vw", 'marginTop': '4vw', 'marginBottom': '4vw' }}>
+                    <Dropzone onDrop={(files) => {console.log('accepted files', files); uploadFiles(files)}}
                         onReject={(files) => console.log('rejected files', files)}
                         maxSize={3 * 1024 ** 2}
                         accept={IMAGE_MIME_TYPE}
@@ -116,6 +147,25 @@ const InputControl = ({ data, handleButtonClick, step, modalMessage, setModalMes
                     >
                         {(status) => dropzoneChildren(status, theme)}
                     </Dropzone>
+                    { step?.documents?.length > 0 && 
+                        <div>
+                            {step.documents.map((item, index) => {
+                                console.log("items in documents: ", item)
+                                return (
+                                    <div style={{'display': 'flex', 'width': '100%', "fontFamily":"'Roboto'", "fontStyle":"normal", "fontWeight":"400", "fontSize":"25px", "lineHeight":"120%", 'padding': '1vw', 'color': '#239E69'}}>
+                                        <div style={{'display': 'flex', 'flex': 1}}>{item.originalname}</div>
+                                        <div style={{'display': 'flex', 'flex': 1, 'justifyContent': 'flex-end'}}> 
+                                            <Button variant="subtle" onClick={(e) => {
+                                                deleteFiles(item.document_id, item.question_id)
+                                            }}>
+                                                <IoClose size='1.63vw'/>
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    }
                 </div>
             )
         case "dropDown":
@@ -130,6 +180,7 @@ const InputControl = ({ data, handleButtonClick, step, modalMessage, setModalMes
                     <Select
                         label={data.label}
                         placeholder={data.placeholder}
+                        value={prefill[data.label]}
                         data={options}
                         styles={{
                             label: { 'color': '#023047', 'fontSize': '1.63vw' },
@@ -142,6 +193,7 @@ const InputControl = ({ data, handleButtonClick, step, modalMessage, setModalMes
                         }}
                         clearable
                         onChange={(e) => {
+                            setPrefill({...prefill, [data.label]: e})
                             if (step.step === 5 || step.step === 8) {
                                 let temp = {
                                     ...answer,
@@ -150,7 +202,7 @@ const InputControl = ({ data, handleButtonClick, step, modalMessage, setModalMes
                                 console.log("Temp Var: ", temp)
                                 setAnswer(temp)
                             } else {
-                                setAnswer(e.target.value)
+                                setAnswer(e)
                             }
                         }}
                     />
@@ -241,6 +293,7 @@ const InputControl = ({ data, handleButtonClick, step, modalMessage, setModalMes
                         label={data.label}
                         placeholder={data.placeholder}
                         error = {dateError}
+                        value= {new Date(prefill[data.label])}
                         styles={{
                             label: { 'color': '#023047', 'fontSize': '1.63vw' },
                             root: { 'width': '100%' },
@@ -248,6 +301,7 @@ const InputControl = ({ data, handleButtonClick, step, modalMessage, setModalMes
                             input: { 'height': '3.8vw', 'border': 'none', 'fontSize': '1.3vw', 'color':'#023047' }
                         }}
                         onChange = {(e) => {
+                            setPrefill({...prefill, [data.label]: e.toDateString()})
                             if(e != null){
                                 let diff = new Date().getFullYear() - e.getFullYear()
                                 if(diff < 18) {
@@ -270,7 +324,20 @@ const InputControl = ({ data, handleButtonClick, step, modalMessage, setModalMes
                     />
                 </div>
             )
-        case 'table': 
+        case 'table':
+            const deleteKeyContact = (contactTypeId, questionId, keyContactId) => {
+                let data = {
+                    "contact_type_id": contactTypeId,
+                    "question_id": questionId,
+                    "key_contact_id": keyContactId
+                }
+                getWillFlow(0, data).then((response) => {
+                    console.log("Delete contact success response: ", response.data)
+                    willFlow.set(response.data)
+                }, (error) => {
+                    console.log("Delete contact error: ", error)
+                })
+            } 
             return (
                 <div style={{ 'display': 'flex', 'flexDirection': 'column', 'width': '100%', "gap": "1.05vw", 'marginBottom': '2vw' }}>
                     <div style={{ "display": "flex", "flexDirection": "row", "alignItems": "center", "padding": "2%", "gap": "10px", "background": "#DEF1FD", "borderRadius": "3px 3px 0px 0px", "flex": "none", "order": "0", "flexGrow": "0", "paddingRight": "8%", "justifyContent": "space-between" }}>
@@ -297,7 +364,14 @@ const InputControl = ({ data, handleButtonClick, step, modalMessage, setModalMes
                                         >
                                             Edit
                                         </Button>
-                                        <Button style={{"fontSize":'1.3vw', "backgroundColor":"#ffffff", 'color':'#023047', 'height':'3.8vw', 'width':'3.8vw', "boxShadow":"1px 1px 5px 2px rgba(0, 0, 0, 0.1)"}}><BiTrash/></Button>
+                                        <Button 
+                                            style={{"fontSize":'1.3vw', "backgroundColor":"#ffffff", 'color':'#023047', 'height':'3.8vw', 'width':'3.8vw', "boxShadow":"1px 1px 5px 2px rgba(0, 0, 0, 0.1)"}}
+                                            onClick = {(e) => {
+                                                deleteKeyContact(item.contact_type_id, item.question_id, item.key_contact_id)
+                                            }}
+                                        >
+                                            <BiTrash/>
+                                        </Button>
                                     </div>
                                 </div>
                             </div>

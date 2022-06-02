@@ -3,7 +3,7 @@ import axios from "axios";
 
 const whitney = axios.create({
     headers: {
-        'Content-Type': 'multipart/formdata',
+        'Content-Type': 'multipart/form-data',
         "Access-Control-Allow-Origin": "*"
     }
     
@@ -16,6 +16,7 @@ export const getWillFlow = (flowId,data) => {
         console.log("Without data")
         return whitney.get(willFlowUrl)
     } else {
+        console.log("Data in api call: ", data)
         let formData = new FormData()
         Object.keys(data).map((item, index) => {
             formData.set(item, data[item])

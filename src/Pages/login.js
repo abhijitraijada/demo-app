@@ -8,15 +8,22 @@ import axios, {post} from 'axios'
 const Login = ({ navigate }) => {
     const [page, setPage] = useState()
     const [name, setName] = useState("");
-    let url = "https://development.project-whitney.com/whitney/public/api/v1/userdata/827ccb0eea8a706c4c34a16891f84e7b04/827ccb0eea8a706c4c34a16891f84e7b04/category/10001/topic/200000001?test_json_response=test"
+    let url = "https://development.project-whitney.com/whitney/public/api/v1/userdata/827ccb0eea8a706c4c34a16891f84e7b04/827ccb0eea8a706c4c34a16891f84e7b04/category/10001/topic/200000001"
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event,files) => {
         event.preventDefault();
-        const formData = new FormData()
-        formData.append("answer", name)
+        let data = {
+            "SaveDocument": "Submit",
+            "question_id": 210000003,
+            "uploaded_files": files
+        }
+        let formData = new FormData()
+        Object.keys(data).map((item, index) => {
+            formData.set(item, data[item])
+        })
         const config = {
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
             } 
         }
         console.log("form data from login: ", formData)
@@ -32,9 +39,8 @@ const Login = ({ navigate }) => {
             <form onSubmit={handleSubmit}>
                 <label>Enter your name:
                     <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        type="file"
+                        onChange={(e) => {console.log("File changed: ", e); handleSubmit(e, e.target.files)}}
                     />
                 </label>
                 <input type="submit" />

@@ -190,11 +190,7 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
 
     useEffect(() => {
         setLoading(true)
-        getWillFlow( 0,{
-            "SaveData": "submit",
-            "question_id": 210000002,
-            "answer": "Testing"
-        }).then((response) => {
+        getWillFlow(0).then((response) => {
             console.log("Response of get willflow object: ", response.data)
             setWillFlow(response.data)
         }, (error) => {
@@ -265,17 +261,17 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
                             prefill = {prefill}
                             setPrefill = {setPrefill}
                             btnClick = {btnClick}
+                            willFlow = {{get: () => {return willFlow}, set: setWillFlow}}
                         />
                     )
                 })}
-                <Footer />
-                <div style={{ "width": "100%", "paddingBottom": "80px" }}></div>
+                <div style={{ "width": "100%", "paddingBottom": "160px" }}></div>
             </div>}
             {!modalStatus && !loading && <Affix
                 position={{ "bottom": 0, 'left': 270 }}
-                style={{ "width": '100%', "padding": '1vw', "backgroundColor": '#ffffff', 'height': '80px' }}
+                style={{ "width": '100%', "padding": '1vw', "backgroundColor": '#ffffff', 'height': '100px' }}
             >
-                <Affix position={{ bottom: 20, left: 330 }}>
+                <Affix position={{ bottom: 70, left: 330 }}>
                     <Button
                         sx={(theme) => ({
                             '&:hover': {
@@ -304,7 +300,7 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
                     </Button>
                 </Affix>
                 {willFlow?.steps[counter]?.continueBtn?.visible &&
-                    <Affix position={{ bottom: 20, right: 80 }}>
+                    <Affix position={{ bottom: 70, right: 80 }}>
                         <Button sx={(theme) => ({
                             backgroundColor: '#023047',
                             fontSize: 16,
@@ -325,6 +321,9 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
                         </Button>
                     </Affix>
                 }
+                <Affix position={{bottom: 20, left: "40vw"}}>
+                    <Footer />
+                </Affix>
             </Affix>}
         </div>
     )

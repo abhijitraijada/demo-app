@@ -9,14 +9,11 @@ const Footer = () => {
         <>
             <Box sx={(theme) => (
                 {
-                    height: 100,
                     display: 'flex',
                     alignItems: 'center',
                     alignContent: 'center',
                     flexDirection: 'column',
                     zIndex: 200,
-                    width: '100%',
-                    // paddingBottom: '80px'
                 }
             )}>
                 <div style={{ paddingTop: 30, display: 'flex', flexDirection: 'row' }}>
