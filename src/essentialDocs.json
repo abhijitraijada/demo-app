@@ -1,0 +1,50 @@
+[
+    {
+       "name":"Will",
+       "content":"Note where your will is kept. Uploading the document, entering your list of beneficiaries and executors is your choice.",
+       "action":{
+          "text":"Start",
+          "clickAction":"Api call url"
+       }
+    },
+    {
+       "name":"Power of attorney",
+       "content":"Note who can act for you in legal or financial matters.",
+       "action":{
+          "text":"Start",
+          "clickAction":"Api call url"
+       }
+    },
+    {
+       "name":"Trusts",
+       "content":"Appoint another party to hold assets on behalf of one or more beneficiaries.",
+       "action":{
+          "text":"Start",
+          "clickAction":"Api call url"
+       }
+    },
+    {
+       "name":"Living will",
+       "content":"Note what medical treatments you would and would not want.",
+       "action":{
+          "text":"Add",
+          "clickAction":"Api call url"
+       }
+    },
+    {
+       "name":"Healthcare directive",
+       "content":"Note who can make medical decisions for you.",
+       "action":{
+          "text":"Add",
+          "clickAction":"Api call url"
+       }
+    },
+    {
+       "name":"Add your own",
+       "content":"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+       "action":{
+          "text":"Add",
+          "clickAction":"Api call url"
+       }
+    }
+ ]
