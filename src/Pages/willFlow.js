@@ -20,6 +20,7 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
     const [beneficiaries, setBeneficiaries] = useState(true)
     const [executors, setExecutors] = useState(true)
     const [prefill, setPrefill] = useState()
+    const [editMode, setEditMode] = useState(false)
     // const willFlow = require("../willFlow.json")
     const [answer, setAnswer] = useState()
 
@@ -84,6 +85,11 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
                 "question_id": 210000010,
                 ...answer
             }
+        }
+        if(editMode?.value) {
+            data.question_id = editMode?.data?.question_id
+            data.contact_type_id = editMode?.data?.contact_type_id
+            data.key_contact_id = editMode?.data?.key_contact_id
         }
         setLoading(true)
         getWillFlow(0, data).then((response) => {
@@ -174,15 +180,17 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
 
     const btnClick = (data) => {
         setCounter(counter - 1)
+        setEditMode({value: true, data: data})
         if(data) {
             let temp = willFlow
             console.log("Data from btn click: ", data)
             console.log("Inputlist on btnCLick: ",  data)
-            willFlow.steps[counter-1].inputList.map((item, index) => {
+            temp.steps[counter-1].inputList.map((item, index) => {
                 console.log("Match see: ", item.id, data[item.id])
                 item.prefill = data[item.id]
             })
             console.log("Temp Object from btnCLick: ", temp.steps[counter-1].inputList)
+            setWillFlow(temp)
         }
     }
 
@@ -220,6 +228,7 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
             console.log("answer Object: ", ansObj, prefillObj)
             setPrefill(prefillObj)
             setAnswer(ansObj)
+            setPrevStep(counter-1)
         }
     }, [counter, loading])
 
