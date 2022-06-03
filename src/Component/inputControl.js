@@ -160,7 +160,7 @@ const InputControl = ({
                         >
                             {(status) => dropzoneChildren(status, theme)}
                         </Dropzone>
-                        <input type="submit" name="SaveDocument" value="Submit"/>
+                        <input type="submit" name="SaveDocument" value="Submit" hidden/>
                     </form>
                     { step?.documents?.length > 0 && 
                         <div>
