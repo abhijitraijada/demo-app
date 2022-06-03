@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import React, {useState} from "react";
 
 function App() {
-  let [loggedIn, setLoggedIn] = useState(false)
+  let [loggedIn, setLoggedIn] = useState(true)
   return (
     <Router>
       <MantineProvider

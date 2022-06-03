@@ -1,4 +1,4 @@
-import React, {useState}from "react";
+import React, {useEffect, useRef, useState}from "react";
 import { Button, Textarea, Text, useMantineTheme, Group, Select, TextInput, Avatar } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
 import { HiOutlineLightBulb } from 'react-icons/hi'
@@ -17,6 +17,7 @@ const InputControl = ({
     const theme = useMantineTheme();
     const [dateError, setDateError] = useState()
     const [textInputError, setTextInputError] = useState()
+    const fileRef = useRef()
 
     switch (data.type) {
         case "yesNoButton":
@@ -110,12 +111,20 @@ const InputControl = ({
                 )
             }
             const uploadFiles = (files) => {
-                let data = {
-                    "SaveDocument": "Submit",
-                    "question_id": 210000003,
-                    "uploaded_files": files
-                }
-                getWillFlow(0,data).then((response) => {
+                // let data = {
+                //     "SaveDocument": "Submit",
+                //     "question_id": 210000003,
+                //     "uploaded_files[]": fileRef.current.firstChild.files
+                // }
+                console.log("form data here: ", fileRef.current)
+                let formElement = document.getElementById("Fileform")
+                console.log("Form data Here: ", document.getElementById("Fileform"), formElement)
+                let formData = new FormData(formElement)
+                formData.set("question_id", 210000003)
+                // console.log("Data from dropzone: ", files)
+                // console.log("Data from ref: ", fileRef.current.firstChild.files)
+                // console.log("Data from html Element: ", document.getElementById("fileInputRef").firstChild.files)
+                getWillFlow(0,formData, true).then((response) => {
                     console.log("Files upload response: ", response.data)
                 }, (error) => {
                     console.log("Files upload Error: ", error)
@@ -123,6 +132,7 @@ const InputControl = ({
             }
             const deleteFiles = (documentId, questionId) => {
                 let data = {
+                    "DeleteDocument":"Delete",
                     "document_id": documentId,
                     "question_id": questionId
                 }
@@ -135,18 +145,23 @@ const InputControl = ({
             }
             return (
                 <div style={{ 'display': 'flex', 'flexDirection': 'column', 'width': '100%', "gap": "1.63vw", 'marginTop': '4vw', 'marginBottom': '4vw' }}>
-                    <Dropzone onDrop={(files) => {console.log('accepted files', files); uploadFiles(files)}}
-                        onReject={(files) => console.log('rejected files', files)}
-                        maxSize={3 * 1024 ** 2}
-                        accept={IMAGE_MIME_TYPE}
-                        multiple={true}
-                        styles={{
-                            'root': { "width": '100%' }
-                        }}
-                        onChange={(e) => {console.log("File on change value: ", e)}}
-                    >
-                        {(status) => dropzoneChildren(status, theme)}
-                    </Dropzone>
+                    <form  onSubmit={uploadFiles} method="post" enctype="multipart/form-data" id = "Fileform">
+                        <Dropzone onDrop={(files) => {console.log('accepted files', files); uploadFiles(files)}}
+                            onReject={(files) => console.log('rejected files', files)}
+                            maxSize={3 * 1024 ** 2}
+                            accept={IMAGE_MIME_TYPE}
+                            multiple={true}
+                            id = "fileInputRef"
+                            name = "uploaded_files[]"
+                            styles={{
+                                'root': { "width": '100%' }
+                            }}
+                            onChange={(e) => {console.log("File on change value: ", e)}}
+                        >
+                            {(status) => dropzoneChildren(status, theme)}
+                        </Dropzone>
+                        <input type="submit" name="SaveDocument" value="Submit"/>
+                    </form>
                     { step?.documents?.length > 0 && 
                         <div>
                             {step.documents.map((item, index) => {
@@ -246,7 +261,7 @@ const InputControl = ({
                             if (step.step === 5 || step.step === 8) {
                                 let temp = {
                                     ...answer,
-                                    [data.label.toLowerCase().replace(" ","_")]: e.target.value
+                                    [data.id]: e.target.value
                                 }
                                 console.log("Temp Var: ", temp)
                                 setAnswer(temp)
@@ -286,14 +301,13 @@ const InputControl = ({
                     />
                 </div>
             )
-        case 'dateInput':
+        case 'date':
             return (
                 <div style={{ 'display': 'flex', 'flexDirection': 'row', 'width': '49%', "gap": "1.63vw", 'marginTop': '1.7vw', 'paddingRight': '1%' }}>
                     <DatePicker
                         label={data.label}
                         placeholder={data.placeholder}
                         error = {dateError}
-                        value= {new Date(prefill[data.label])}
                         styles={{
                             label: { 'color': '#023047', 'fontSize': '1.63vw' },
                             root: { 'width': '100%' },
@@ -301,7 +315,7 @@ const InputControl = ({
                             input: { 'height': '3.8vw', 'border': 'none', 'fontSize': '1.3vw', 'color':'#023047' }
                         }}
                         onChange = {(e) => {
-                            setPrefill({...prefill, [data.label]: e.toDateString()})
+                            setPrefill({...prefill, [data.label]: e?.toDateString()})
                             if(e != null){
                                 let diff = new Date().getFullYear() - e.getFullYear()
                                 if(diff < 18) {
@@ -327,6 +341,7 @@ const InputControl = ({
         case 'table':
             const deleteKeyContact = (contactTypeId, questionId, keyContactId) => {
                 let data = {
+                    "DeleteKeyContact": "Delete",
                     "contact_type_id": contactTypeId,
                     "question_id": questionId,
                     "key_contact_id": keyContactId

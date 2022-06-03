@@ -22,7 +22,7 @@
         "title": "Where have you placed the original hard copy of the Will?",
         "discription": "U.S. courts only accept the original Will. Your Executor needs to know where your Will is and have access to the original Will after you have passed.",
         "inputList": [
-            {"type": "textArea", "placeholder": "It is in the fire-proof safe in my bedroom closet. The code is 8999. In the safe there is a big brown envelope which says ‘Will - Original’", "label": "Notes for My Executor(s)", "prefill": "prefill data"},
+            {"type": "textArea", "placeholder": "It is in the fire-proof safe in my bedroom closet. The code is 8999. In the safe there is a big brown envelope which says ‘Will - Original’", "label": "Notes for My Executor(s)", "prefill": "", "id":"answer"},
             {"type": "hint", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "title": "Title", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit augue duis urna nibh arcu. Faucibus sit consectetur sit cum. Arcu ac facilisis neque, orci urna vitae molestie in neque. Pellentesque vitae nisi non vitae elit et massa."},
             {"type": "hint", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "title": "Title", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit augue duis urna nibh arcu. Faucibus sit consectetur sit cum. Arcu ac facilisis neque, orci urna vitae molestie in neque. Pellentesque vitae nisi non vitae elit et massa."},
             {"type": "videoHint", "text":"Videos", "title":"Title", "videoUrl":"https://www.youtube.com/watch?v=u31qwQUeGuM"}
@@ -58,26 +58,27 @@
     },
     {
         "step": 5,
+        "question_id": "",
         "title": "Enter beneficiary information",
         "discription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elit ultrices diam a nibh eget nibh massa. Tellus rhoncus volutpat libero sit in fusce augue id.",
         "inputList": [
-            {"type": "dropDown", "options": ["Mother", "Father", "Brother", "Sister", "Son", "Daughter"], "label": "Relationship", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "textInput", "label": "First name", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "textInput", "label": "Middle name", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "textInput", "label": "Last name", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "smallTextInput", "label": "Suffix", "placeholder": "XXX", "prefill": "prefill data"},
-            {"type": "textInput", "label": "Email", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "dateInput", "label": "Date of Birth", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "textInput", "label": "Address 1", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "textInput", "label": "Address 2", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "textInput", "label": "City", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "textInput", "label": "State", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "textInput", "label": "Country", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "textInput", "label": "Zip/postal code", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "textInput", "label": "Phone No", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "dropDown", "options": ["Option 1", "Option 2", "Option 3", "Option 4"], "label": "Category", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "fileUploader", "text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "prefill": "prefill data"},
-            {"type": "textArea", "placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus augue vulputate quis vitae. Semper aliquet tortor sed mattis. Nibh nec arcu mattis consectetur mauris id interdum turpis pharetra. Vitae orci eu massa ut nunc congue tempor.", "label": "Notes", "prefill": "prefill data"}
+            {"type": "dropDown", "options": ["Mother", "Father", "Brother", "Sister", "Son", "Daughter"], "id":"relationship", "label": "Relationship", "placeholder": "placeholder", "prefill": ""},
+            {"type": "textInput", "label": "First name", "placeholder": "placeholder", "prefill": "", "id":"first_name"},
+            {"type": "textInput", "label": "Middle name", "placeholder": "placeholder", "prefill": "", "id":"middle_name"},
+            {"type": "textInput", "label": "Last name", "placeholder": "placeholder", "prefill": "", "id":"last_name"},
+            {"type": "smallTextInput", "label": "Suffix", "placeholder": "XXX", "prefill": "", "id":"suffix"},
+            {"type": "textInput", "label": "Email", "placeholder": "placeholder", "prefill": "", "id":"email"},
+            {"type": "date", "label": "Birth Date", "placeholder": "placeholder", "prefill": "", "id":"birth_date"},
+            {"type": "textInput", "label": "Address 1", "placeholder": "placeholder", "prefill": "", "id":"address_1"},
+            {"type": "textInput", "label": "Address 2", "placeholder": "placeholder", "prefill": "", "id":"address_2"},
+            {"type": "textInput", "label": "City", "placeholder": "placeholder", "prefill": "", "id":"city"},
+            {"type": "textInput", "label": "State", "placeholder": "placeholder", "prefill": "", "id":"state"},
+            {"type": "textInput", "label": "Zip/postal code", "placeholder": "placeholder", "prefill": "", "id":"zip_code"},
+            {"type": "textInput", "label": "Country", "placeholder": "placeholder", "prefill": "", "id":"country_id"},
+            {"type": "textInput", "label": "Phone No", "placeholder": "placeholder", "prefill": "", "id": "phone_no"},
+            {"type": "dropDown", "options": ["Option 1", "Option 2", "Option 3", "Option 4"], "label": "Category", "id": "category","placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "fileUploader", "text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."},
+            {"type": "textArea", "placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus augue vulputate quis vitae. Semper aliquet tortor sed mattis. Nibh nec arcu mattis consectetur mauris id interdum turpis pharetra. Vitae orci eu massa ut nunc congue tempor.", "label": "Notes", "prefill": "", "id":"notes"}
         ],
         "breadCrumb":[{"text":"Will Location", "status":"done"},{"text":"Upload Will", "status":"active"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
         "label": "Optional",
@@ -136,7 +137,7 @@
         "title": "Notes regarding your Will",
         "discription": "Here is your chance to expess your wishes for things not mentioned in your Will. Remember, anything you write here is not legally binding. Also, mention the person to whom your Executor should turn to should they have questions.",
         "inputList": [
-            {"type": "textArea", "placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus augue vulputate quis vitae. Semper aliquet tortor sed mattis. Nibh nec arcu mattis consectetur mauris id interdum turpis pharetra. Vitae orci eu massa ut nunc congue tempor.", "label": "Notes for My Executor(s)", "prefill": "prefill data"}
+            {"type": "textArea", "placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus augue vulputate quis vitae. Semper aliquet tortor sed mattis. Nibh nec arcu mattis consectetur mauris id interdum turpis pharetra. Vitae orci eu massa ut nunc congue tempor.", "label": "Notes for My Executor(s)", "prefill": ""}
         ],
         "breadCrumb":[{"text":"Will Location", "status":"done"},{"text":"Upload Will", "status":"active"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
         "label": "Optional",

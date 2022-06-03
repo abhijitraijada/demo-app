@@ -108,6 +108,7 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
 
     const submitNotes = (step) => {
         console.log("Submit Notes called")
+        let data = {}
         if (!answer || typeof (answer) != 'string') {
             if (!step.lastStep) {
                 setPrevStep(counter)
@@ -118,10 +119,20 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
             }
             return
         }
-        let data = {
-            "SaveData": "Submit",
-            "question_id": 210000002,
-            "answer": answer
+        if(step.step == 2){
+
+            data = {
+                "SaveData": "Submit",
+                "question_id": 210000002,
+                "answer": answer
+            }
+        }
+        if( step.step == 10){
+            data = {
+                "SaveData": "Submit",
+                "question_id": 210000004,
+                "answer": answer
+            }
         }
         setLoading(true)
         getWillFlow(0, data).then((response) => {
@@ -164,27 +175,14 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
     const btnClick = (data) => {
         setCounter(counter - 1)
         if(data) {
-            let keyarr = []
+            let temp = willFlow
             console.log("Data from btn click: ", data)
-            willFlow.steps[counter-1].inputList.map((inputItem, inputIndex) => {
-                let temp = inputItem?.label?.toLowerCase().replace(" ","_")
-                if(temp !== undefined) {
-                    keyarr.push(temp)
-                }
+            console.log("Inputlist on btnCLick: ",  data)
+            willFlow.steps[counter-1].inputList.map((item, index) => {
+                console.log("Match see: ", item.id, data[item.id])
+                item.prefill = data[item.id]
             })
-            console.log("Key arr: ", keyarr)
-            Object.keys(data).map((item, index) => {
-                console.log("Counting Items: ", item, willFlow.steps[counter-1].inputList[index], index)
-                willFlow.steps[counter-1].inputList.map((inputItem, inputIndex) => {
-                    // let temp = inputItem?.label?.toLowerCase().replace(" ","_")
-                    // if(temp !== undefined) {
-                    //     keyarr.push(temp)
-                    // }
-                    if(item == inputItem?.label?.toLowerCase().replace(" ","_")) {
-                        console.log("Comparision: ", item, inputItem?.label?.toLowerCase().replace(" ","_"))
-                    }
-                })
-            })
+            console.log("Temp Object from btnCLick: ", temp.steps[counter-1].inputList)
         }
     }
 
@@ -212,12 +210,16 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
         if(!loading) {
             let temp = willFlow.steps[counter]
             let prefillObj = {}
+            let ansObj = {}
             temp.inputList.map((item, index) => {
-                if(item?.prefill){
+                if(item?.prefill != undefined){
                     prefillObj = {...prefillObj, [item.label]: item.prefill}
+                    ansObj = {...ansObj, [item?.id]: item.prefill}
                 }
             })
+            console.log("answer Object: ", ansObj, prefillObj)
             setPrefill(prefillObj)
+            setAnswer(ansObj)
         }
     }, [counter, loading])
 
