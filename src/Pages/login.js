@@ -1,13 +1,24 @@
 import React, { useState } from "react";
 import { Image, Box, Text, TextInput, Button } from "@mantine/core"
 import loginImage from "../assets/Images/login.svg"
-import { getWillFlow } from "../apis/willFlowApis"
-import axios, {post} from 'axios'
+import { login } from "../apis/loginApi"
 
 
-const Login = ({ navigate }) => {
+const Login = ({ navigate, setLoggedIn }) => {
     const [newUser, setNewUser] = useState(false)
     const [otpScreen, setOtpScreen] = useState(false)
+    const [loginDetails, setLoginDetails] = useState({"submit": "Submit"})
+
+    const loginBtn = () => {
+        login(loginDetails).then((response) => {
+            console.log("Login API Success: ",response.data)
+            if(response.data.status =  "success") {
+                setLoggedIn(true)
+            }
+        }, (error) => {
+            console.log("Login API Failur: ", error)
+        })
+    }
 
     return (
         <div style={{ "display":"flex", "flexDirection":"row" }}>
@@ -31,15 +42,19 @@ const Login = ({ navigate }) => {
                 {!newUser && !otpScreen &&
                     <div>
                         <Text style={{"fontSize":"1.3vw", "color":"#505664"}}>Welcome Back</Text>
-                        <Text style={{"fontSize":"3.16vw", "color":"#023047", "fontWeight":700}}>Sign in</Text>
+                        <Text style={{"fontSize":"3.16vw", "color":"#023047", "fontWeight":700, "marginBottom": '2vw'}}>Sign in</Text>
                         <TextInput
                             label="Email"
                             placeholder="Name@gmail.com"
                             styles={{
-                                label: { 'color': '#023047', 'fontSize': '1.63vw' },
-                                root: { 'width': '100%' },
+                                label: { 'color': '#023047', 'fontSize': '1.63vw', "marginBottom":"0px" },
+                                root: { 'width': '100%', 'marginBottom': '1.63vw' },
                                 wrapper: { 'minHeight': '3.8vw', 'border': '1px solid #ACB0B9', 'borderRadius': '4px' },
                                 input: { 'height': '3.8vw', 'border': 'none', 'fontSize': '1.3vw', 'color':'#023047' }
+                            }}
+                            onChange = {(e) => {
+                                let temp = {...loginDetails, "email": e.target.value}
+                                setLoginDetails(temp)
                             }}
                         />
                         <TextInput
@@ -47,15 +62,23 @@ const Login = ({ navigate }) => {
                             placeholder="******"
                             type="password"
                             styles={{
-                                label: { 'color': '#023047', 'fontSize': '1.63vw' },
-                                root: { 'width': '100%' },
+                                label: { 'color': '#023047', 'fontSize': '1.63vw', "marginBottom":"0px" },
+                                root: { 'width': '100%', 'marginBottom': '1.63vw' },
                                 wrapper: { 'minHeight': '3.8vw', 'border': '1px solid #ACB0B9', 'borderRadius': '4px' },
                                 input: { 'height': '3.8vw', 'border': 'none', 'fontSize': '1.3vw', 'color':'#023047' }
+                            }}
+                            onChange = {(e) => {
+                                let temp = {...loginDetails, "password": e.target.value}
+                                setLoginDetails(temp)
                             }}
                         />
                         <div style={{"marginBottom":"1.63vw"}}></div>
                         <Button style={{"display":"flex","flexDirection":"row","justifyContent":"center","alignItems":"center","background":"#023047","boxShadow":"1px 1px 13px 12px rgba(2, 48, 71, 0.1)","borderRadius":"4px","fontWeight":"600","fontSize":"2.03vw","padding":"1.3vw 3.8vw", "height": "5vw", "width": "20vw"}}
-                            onClick={() => {setOtpScreen(true)}}
+                            onClick={() => {
+                                console.log("Data for login: ", loginDetails)
+                                setOtpScreen(true)
+                                loginBtn()
+                            }}
                         >Sign in</Button>
                         <Button variant="subtle" style={{"display":"flex","flexDirection":"row","justifyContent":"center","alignItems":"center","marginTop":"1vw","color":"#023047","borderRadius":"4px","fontWeight":"600","fontSize":"1.63vw","padding":"1.3vw 3.8vw", "height": "5vw", "width": "20vw"}}
                             onClick={(e) => {setNewUser(!newUser)}}
@@ -117,7 +140,9 @@ const Login = ({ navigate }) => {
                 </div>
                 }
                 { otpScreen &&
-                    <div>OTP Screen</div>
+                    <div>
+                        
+                    </div>
                 }
             </div>
         </div>

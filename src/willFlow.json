@@ -1,5 +1,6 @@
 {
     "workFlow": "Will",
+    "BreadCrumbsList": ["BreadCrumb1","BreadCrumb2","BreadCrumb3","BreadCrumb4"],
     "steps":[
     {
         "step": 1,
@@ -12,7 +13,7 @@
                 "text2": "No"
             }
         ],
-        "breadCrumb": [{"text":"Will Location", "status":"active"},{"text":"Upload Will", "status":"pending"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
+        "breadCrumb": "Upload Will",
         "continueBtn": {"visible":false, "clickAction": "apiCall"},
         "visible": false
     
@@ -63,19 +64,19 @@
         "discription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elit ultrices diam a nibh eget nibh massa. Tellus rhoncus volutpat libero sit in fusce augue id.",
         "inputList": [
             {"type": "dropDown", "options": ["Mother", "Father", "Brother", "Sister", "Son", "Daughter"], "id":"relationship", "label": "Relationship", "placeholder": "placeholder", "prefill": ""},
-            {"type": "textInput", "label": "First name", "placeholder": "placeholder", "prefill": "", "id":"first_name"},
-            {"type": "textInput", "label": "Middle name", "placeholder": "placeholder", "prefill": "", "id":"middle_name"},
-            {"type": "textInput", "label": "Last name", "placeholder": "placeholder", "prefill": "", "id":"last_name"},
+            {"type": "textInput", "label": "First name", "placeholder": "placeholder", "prefill": "", "id":"firstname"},
+            {"type": "textInput", "label": "Middle name", "placeholder": "placeholder", "prefill": "", "id":"middlename"},
+            {"type": "textInput", "label": "Last name", "placeholder": "placeholder", "prefill": "", "id":"lastname"},
             {"type": "smallTextInput", "label": "Suffix", "placeholder": "XXX", "prefill": "", "id":"suffix"},
             {"type": "textInput", "label": "Email", "placeholder": "placeholder", "prefill": "", "id":"email"},
-            {"type": "date", "label": "Birth Date", "placeholder": "placeholder", "prefill": "", "id":"birth_date"},
-            {"type": "textInput", "label": "Address 1", "placeholder": "placeholder", "prefill": "", "id":"address_1"},
-            {"type": "textInput", "label": "Address 2", "placeholder": "placeholder", "prefill": "", "id":"address_2"},
+            {"type": "date", "label": "Birth Date", "placeholder": "placeholder", "prefill": "", "id":"dob"},
+            {"type": "textInput", "label": "Address 1", "placeholder": "placeholder", "prefill": "", "id":"address_line1"},
+            {"type": "textInput", "label": "Address 2", "placeholder": "placeholder", "prefill": "", "id":"address_line2"},
             {"type": "textInput", "label": "City", "placeholder": "placeholder", "prefill": "", "id":"city"},
             {"type": "textInput", "label": "State", "placeholder": "placeholder", "prefill": "", "id":"state"},
-            {"type": "textInput", "label": "Zip/postal code", "placeholder": "placeholder", "prefill": "", "id":"zip_code"},
+            {"type": "textInput", "label": "Zip/postal code", "placeholder": "placeholder", "prefill": "", "id":"zip"},
             {"type": "textInput", "label": "Country", "placeholder": "placeholder", "prefill": "", "id":"country_id"},
-            {"type": "textInput", "label": "Phone No", "placeholder": "placeholder", "prefill": "", "id": "phone_no"},
+            {"type": "textInput", "label": "Phone No", "placeholder": "placeholder", "prefill": "", "id": "phone"},
             {"type": "dropDown", "options": ["Option 1", "Option 2", "Option 3", "Option 4"], "label": "Category", "id": "category","placeholder": "placeholder", "prefill": "prefill data"},
             {"type": "fileUploader", "text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."},
             {"type": "textArea", "placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus augue vulputate quis vitae. Semper aliquet tortor sed mattis. Nibh nec arcu mattis consectetur mauris id interdum turpis pharetra. Vitae orci eu massa ut nunc congue tempor.", "label": "Notes", "prefill": "", "id":"notes"}
@@ -112,9 +113,23 @@
         "title": "Enter executor information",
         "discription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elit ultrices diam a nibh eget nibh massa. Tellus rhoncus volutpat libero sit in fusce augue id.",
         "inputList": [
-            {"type": "dropDown", "options": ["Mother", "Father", "Brother", "Sister", "Son", "Daughter"], "label": "Relationship", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "textInput", "label": "First name", "placeholder": "placeholder", "prefill": "prefill data"},
-            {"type": "textInput", "label": "Middle name", "placeholder": "placeholder", "prefill": "prefill data"}
+            {"type": "dropDown", "options": ["Mother", "Father", "Brother", "Sister", "Son", "Daughter"], "id":"relationship", "label": "Relationship", "placeholder": "placeholder", "prefill": ""},
+                {"type": "textInput", "label": "First name", "placeholder": "placeholder", "prefill": "", "id":"firstname"},
+                {"type": "textInput", "label": "Middle name", "placeholder": "placeholder", "prefill": "", "id":"middlename"},
+                {"type": "textInput", "label": "Last name", "placeholder": "placeholder", "prefill": "", "id":"lastname"},
+                {"type": "smallTextInput", "label": "Suffix", "placeholder": "XXX", "prefill": "", "id":"suffix"},
+                {"type": "textInput", "label": "Email", "placeholder": "placeholder", "prefill": "", "id":"email"},
+                {"type": "date", "label": "Birth Date", "placeholder": "placeholder", "prefill": "", "id":"dob"},
+                {"type": "textInput", "label": "Address 1", "placeholder": "placeholder", "prefill": "", "id":"address_line1"},
+                {"type": "textInput", "label": "Address 2", "placeholder": "placeholder", "prefill": "", "id":"address_line2"},
+                {"type": "textInput", "label": "City", "placeholder": "placeholder", "prefill": "", "id":"city"},
+                {"type": "textInput", "label": "State", "placeholder": "placeholder", "prefill": "", "id":"state"},
+                {"type": "textInput", "label": "Zip/postal code", "placeholder": "placeholder", "prefill": "", "id":"zip"},
+                {"type": "textInput", "label": "Country", "placeholder": "placeholder", "prefill": "", "id":"country_id"},
+                {"type": "textInput", "label": "Phone No", "placeholder": "placeholder", "prefill": "", "id": "phone"},
+                {"type": "dropDown", "options": ["Option 1", "Option 2", "Option 3", "Option 4"], "label": "Category", "id": "category","placeholder": "placeholder", "prefill": "prefill data"},
+                {"type": "fileUploader", "text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."},
+                {"type": "textArea", "placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus augue vulputate quis vitae. Semper aliquet tortor sed mattis. Nibh nec arcu mattis consectetur mauris id interdum turpis pharetra. Vitae orci eu massa ut nunc congue tempor.", "label": "Notes", "prefill": "", "id":"notes"}
         ],
         "breadCrumb":[{"text":"Will Location", "status":"done"},{"text":"Upload Will", "status":"active"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
         "label": "Important",

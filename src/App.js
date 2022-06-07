@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import React, {useState} from "react";
 
 function App() {
-  let [loggedIn, setLoggedIn] = useState(true)
+  let [loggedIn, setLoggedIn] = useState(false)
   return (
     <Router>
       <MantineProvider
@@ -39,7 +39,7 @@ function App() {
           },
         }}
       >
-        {loggedIn ? <Home/> : <Login/>}
+        {loggedIn ? <Home setLoggedIn = {setLoggedIn}/> : <Login setLoggedIn = {setLoggedIn}/>}
       </MantineProvider>
     </Router>
   );

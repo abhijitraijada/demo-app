@@ -369,7 +369,10 @@ const InputControl = ({
                                 <div style={{"display":"flex","flexDirection":"row","justifyContent":"space-between","alignItems":"center","padding":"0px","gap":"64px", 'width': '100%'}}>
                                     <div style={{"display":"flex","flexDirection":"row","alignItems":"center","padding":"0px","gap":"16px", 'padding':'1%', 'minWidth': '70%'}}>
                                         <Avatar size='4vw' radius='xl'/>
-                                        <Text style={{'color': '#023047', 'fontSize':'1.63vw'}}>{item.firstname} {item.lastname}</Text>
+                                        <div style={{"display":"flex","flexDirection":"column"}}>
+                                            <Text style={{'color': '#023047', 'fontSize':'1.63vw'}}>{item.first_name} {item.last_name}</Text>
+                                            <Text style={{"color": "#505664", "fontSize":"1.05vw"}}>{item.relationship}</Text>
+                                        </div>
                                     </div>
                                     <div style={{"display":"flex","flexDirection":"row","alignItems":"center","padding":"0px","gap":"16px", 'flexGrow': '1', 'justifyContent':'space-evenly'}}>
                                         <Button 

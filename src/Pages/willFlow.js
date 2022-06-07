@@ -104,6 +104,7 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
             setWillFlow(response.data)
             setLoading(false)
             setAnswer()
+            setEditMode(false)
         }, (error) => {
             console.log("Error in API call: ", error)
             setPrevStep(counter)
