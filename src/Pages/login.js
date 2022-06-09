@@ -102,6 +102,7 @@ const Login = ({ navigate, setLoggedIn }) => {
             console.log("OTP Verification Data: ", response.data)
             if(response.data.status === "success") {
                 setNewUser(false)
+                setOtpScreen(false)
                 setLoading(false)
             }
             if (response.data.error === "error") {
