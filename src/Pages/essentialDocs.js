@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import React from "react";
-import { Button } from '@mantine/core'
+import { Button, LoadingOverlay } from '@mantine/core'
 import { BiPencil, BiTrash } from 'react-icons/bi'
 import Footer from "../Component/footer"
+import { addTopic, getDocList, deleteTopic } from "../apis/docListApi"
 
 const EssentialDocs = ({ navigate }) => {
     const essentialDocsJson = [
@@ -37,7 +38,7 @@ const EssentialDocs = ({ navigate }) => {
             'action': {'text': 'Add', 'clickAction':'Api call url'},
         }
     ]
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [docList, setDocList] = useState([
         {
             'name': 'Will',
@@ -70,9 +71,53 @@ const EssentialDocs = ({ navigate }) => {
             'action': 'add',
         }
     ])
+    const [myTopics, setMyTopics] = useState()
+    const [otherTopics, setOtherTopics] = useState()
+
     useEffect(() => {
-        console.log("Doc list changed >> ", docList)
-    },[docList])
+        console.log("Doc list changed ", docList)
+        setLoading(true)
+        getDocList().then((response) => {
+            console.log("DocList Api response: ", response.data)
+            setMyTopics(response.data.mytopics)
+            setOtherTopics(response.data.othertopics)
+            setLoading(false)
+        }, (error) => {
+            console.log("Error in get doc list: ", error)
+        })
+    },[])
+
+    const addTopicBtn = (topicId) => {
+        setLoading(true)
+        addTopic(topicId).then((response) => {
+            console.log("Add topic response: ",response.data)
+            setMyTopics(response.data.mytopics)
+            setOtherTopics(response.data.othertopics)
+            setLoading(false)
+        }, (error) => {
+            console.log("Add topic response: ", error)
+            setLoading(false)
+        })
+    }
+
+    const deleteTopicBtn = (topicId) => {
+        setLoading(true)
+        deleteTopic(topicId).then((response) => {
+            console.log("response data for delete topic: ", response.data)
+            setMyTopics(response.data.mytopics)
+            setOtherTopics(response.data.othertopics)
+            setLoading(false)
+        }, (error) => {
+            console.log("Error in delete Topic: ", error)
+            setLoading(false)
+        })
+    }
+
+    if (loading) {
+        return (
+            <LoadingOverlay visible={loading} />
+        )
+    }
     return(
         <div style={{"display": 'flex', 'flexDirection': 'column', 'paddingRight': '2%'}}>
             <div style={{ "fontFamily":"'Source Sans Pro'", "fontStyle":"normal", "fontWeight":"700", "fontSize":"3.16vw", "display":"flex", "alignItems":"center", "color":"#023047"}}>
@@ -89,10 +134,9 @@ const EssentialDocs = ({ navigate }) => {
                     Action
                 </div>
             </div>
-            {docList && docList.map(( item, index )=> {
+            {myTopics && myTopics.map(( item, index )=> {
                 return(
-                    <>
-                        {item.action === 'start' && 
+                    <> 
                             <div style={{"display":"flex","flexDirection":"column","boxShadow":"1px 1px 5px 2px rgba(0, 0, 0, 0.1)","boxSizing":"border-box","background":"#FEFEFE","border":"1px solid #DEF1FD","borderRadius":"4px"}}>
                                 <div style={{"display":"flex","flexDirection":"row","justifyContent":"space-between","alignItems":"center", "padding": '1.5%'}}>
                                     <div style={{"display":"flex","flexDirection":"column","padding":"4px 0px", "flexGrow": "15" , "maxWidth": "80%"}}>
@@ -120,6 +164,7 @@ const EssentialDocs = ({ navigate }) => {
                                                 setLoading(true)
                                                 setDocList([...tempList])
                                                 setLoading(false)
+                                                deleteTopicBtn(item.topic_id)
                                             }}
                                             style={{'position': 'relative', 'right': '15%', "backgroundColor": "#FFFFFF", "color": "#023047", 'width': '56px', 'height': '57px', "fontFamily":"'Source Sans Pro'","fontStyle":"normal","fontWeight":"600","fontSize":"1.3vw","lineHeight":"100%", "boxShadow":"1px 1px 5px 2px rgba(0, 0, 0, 0.1)","borderRadius":"4.62222px"}}
                                         >
@@ -128,7 +173,6 @@ const EssentialDocs = ({ navigate }) => {
                                     </div>
                                 </div>
                             </div>
-                        }
                     </>
                 )
             })}
@@ -143,10 +187,9 @@ const EssentialDocs = ({ navigate }) => {
                     Action
                 </div>
             </div>
-            {docList.map(( item, index )=> {
+            {otherTopics.map(( item, index )=> {
                 return(
                     <>
-                        {item.action === 'add' && 
                             <div style={{"display":"flex","flexDirection":"column","boxShadow":"1px 1px 5px 2px rgba(0, 0, 0, 0.1)","boxSizing":"border-box","background":"#FEFEFE","border":"1px solid #DEF1FD","borderRadius":"4px"}}>
                                 <div style={{"display":"flex","flexDirection":"row","justifyContent":"space-between","alignItems":"center", "padding": '1.5%'}}>
                                     <div style={{"display":"flex","flexDirection":"column","padding":"4px 0px", "flexGrow": "15" , "maxWidth": "80%"}}>
@@ -165,6 +208,7 @@ const EssentialDocs = ({ navigate }) => {
                                                 setLoading(true)
                                                 setDocList([...tempList])
                                                 setLoading(false)
+                                                addTopicBtn(item.topic_id)
                                             }}
                                             leftIcon={<BiPencil/>}
                                             style={{'position': 'relative', 'right': '3%', "backgroundColor": "#023047", 'width': '142px', 'height': '57px', "fontFamily":"'Source Sans Pro'","fontStyle":"normal","fontWeight":"600","fontSize":"1.3vw","lineHeight":"100%"}}
@@ -174,7 +218,6 @@ const EssentialDocs = ({ navigate }) => {
                                     </div>
                                 </div>
                             </div>
-                        }
                     </>
                 )
             })}

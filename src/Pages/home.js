@@ -12,14 +12,14 @@ import WillFlow3 from '../Pages/willFlow3'
 import WillFlow4 from '../Pages/willFlow4'
 import Test from '../Pages/test'
 
-const Home = () => {
+const Home = ({setLoggedIn}) => {
     const navigate = useNavigate()
     const [counter, setCounter] = useState(0)
     return(
         <div>
             <Header/>
             <div style={{display : 'flex', flexDirection: 'row'}}>
-                <SideBar navigate = {navigate} />
+                <SideBar navigate = {navigate} setLoggedIn = {setLoggedIn}/>
                 <div style={{overflowX: 'auto', height: window.innerHeight - 148, position:'relative', width:'100%'}}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignContent: 'center', padding: 20}}>
                         <Routes>

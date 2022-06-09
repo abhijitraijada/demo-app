@@ -3,10 +3,18 @@ import { MantineProvider } from "@mantine/core";
 import Home from "./Pages/home";
 import Login from "./Pages/login";
 import { BrowserRouter as Router } from 'react-router-dom'
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 function App() {
   let [loggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    let temp = localStorage.getItem("project_whiteney_email")
+    if(temp !== null) {
+      setLoggedIn(true)
+    }
+  })
+
   return (
     <Router>
       <MantineProvider

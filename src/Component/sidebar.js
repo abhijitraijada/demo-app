@@ -3,7 +3,7 @@ import { Box, Avatar, Text, Button, List } from '@mantine/core'
 import { BiHome, BiUserCircle, BiCog, BiLogOut, BiBookOpen } from 'react-icons/bi'
 import { BsCircleFill } from 'react-icons/bs'
 
-export default function SideBar({navigate}) {
+export default function SideBar({navigate, setLoggedIn}) {
     const [infoBinderMenu, setInfoBinderMenu] = useState(false)
     return (
         <Box sx={(theme) => (
@@ -79,7 +79,13 @@ export default function SideBar({navigate}) {
                                 <Text style={{color: '#62697B', fontSize: 25, paddingLeft: 10}}>Setting</Text>
                             </div>
                         </Button>
-                        <Button variant="subtle" style={{ display: 'flex', height: 50 }}>
+                        <Button variant="subtle" style={{ display: 'flex', height: 50 }}
+                            onClick = {() => {
+                                localStorage.removeItem("project_whiteney_email")
+                                localStorage.removeItem("project_whiteney_user_data")
+                                setLoggedIn(false)
+                            }}
+                        >
                             <div style={{ display: "flex", flexDirection: 'row', alignContent: 'center' }}>
                                 <BiLogOut size={28} color="#62697B"/>
                                 <Text style={{color: '#62697B', fontSize: 25, paddingLeft: 10}}>Logout</Text>
