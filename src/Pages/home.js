@@ -6,11 +6,11 @@ import {Routes, Route, Outlet, useNavigate } from 'react-router-dom'
 import EssentialDocs from '../Pages/essentialDocs'
 import InfoBinder from '../Pages/infoBinder'
 import WillFlow from '../Pages/willFlow'
-import WillFlow1 from '../Pages/willFlow1'
-import WillFlow2 from '../Pages/willFlow2'
-import WillFlow3 from '../Pages/willFlow3'
-import WillFlow4 from '../Pages/willFlow4'
 import Test from '../Pages/test'
+import PowerOfAttorney from "./powerOfAttorney";
+import Trust from "./trust";
+import LivingWill from "./livingWill";
+import HealthcareProxy from "./healthcareProxy";
 
 const Home = ({setLoggedIn}) => {
     const navigate = useNavigate()
@@ -27,10 +27,10 @@ const Home = ({setLoggedIn}) => {
                             <Route path="/test" element={<Test navigate={navigate}/>}/>
                             <Route path="/essentialDocs" element={<EssentialDocs navigate={navigate}/>}/>
                             <Route path="/essentialDocs/willFlow" element={<WillFlow navigate={navigate} counter = {counter} setCounter={setCounter}/>}/>
-                            <Route path="/essentialDocs/willFlow/1" element={<WillFlow1 navigate={navigate} counter = {counter} setCounter={setCounter}/>}/>
-                            <Route path="/essentialDocs/willFlow/2" element={<WillFlow2 navigate={navigate} counter = {counter} setCounter={setCounter}/>}/>
-                            <Route path="/essentialDocs/willFlow/3" element={<WillFlow3 navigate={navigate} counter = {counter} setCounter={setCounter}/>}/>
-                            <Route path="/essentialDocs/willFlow/4" element={<WillFlow4 navigate={navigate} counter = {counter} setCounter={setCounter}/>}/>
+                            <Route path="/essentialDocs/powerOfAttorney" element={<PowerOfAttorney navigate={navigate} counter = {counter} setCounter={setCounter}/>}/>
+                            <Route path="/essentialDocs/trust" element={<Trust navigate={navigate} counter = {counter} setCounter={setCounter}/>}/>
+                            <Route path="/essentialDocs/livingWill" element={<LivingWill navigate={navigate} counter = {counter} setCounter={setCounter}/>}/>
+                            <Route path="/essentialDocs/healthcareProxy" element={<HealthcareProxy navigate={navigate} counter = {counter} setCounter={setCounter}/>}/>
                         </Routes>
                     </div>
                     <Outlet/>

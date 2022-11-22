@@ -1,163 +1,177 @@
 {
+    "status": "success",
+    "message": "success",
     "workFlow": "Will",
-    "BreadCrumbsList": ["BreadCrumb1","BreadCrumb2","BreadCrumb3","BreadCrumb4"],
-    "steps":[
-    {
+    "breadCrumbsList": ["Will Location","Upload Will","Beneficiaries","Executors","Notes"],
+    "steps":[{
         "step": 1,
-        "title": "Do you have a will",
-        "discription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elit ultrices diam a nibh eget nibh massa. Tellus rhoncus volutpat libero sit in fusce augue id.",
+        "activBreadCrumb": "Will Location",
+        "title": "Do you have a Will?",
+        "description": "Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content.",
         "inputList": [
             {
                 "type": "yesNoButton", 
                 "text1": "Yes", 
                 "text2": "No"
             }
+            
         ],
-        "breadCrumb": "Upload Will",
         "continueBtn": {"visible":false, "clickAction": "apiCall"},
-        "visible": false
-    
+        "visible":false
+
     },
     {
         "step": 2,
+        "activBreadCrumb": "Will Location",
         "title": "Where have you placed the original hard copy of the Will?",
-        "discription": "U.S. courts only accept the original Will. Your Executor needs to know where your Will is and have access to the original Will after you have passed.",
+        "description": "U.S. courts only accept the original Will. Your Executor needs to know where your Will is and have access to the original Will after you have passed.",
         "inputList": [
-            {"type": "textArea", "placeholder": "It is in the fire-proof safe in my bedroom closet. The code is 8999. In the safe there is a big brown envelope which says ‘Will - Original’", "label": "Notes for My Executor(s)", "prefill": "", "id":"answer"},
-            {"type": "hint", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "title": "Title", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit augue duis urna nibh arcu. Faucibus sit consectetur sit cum. Arcu ac facilisis neque, orci urna vitae molestie in neque. Pellentesque vitae nisi non vitae elit et massa."},
-            {"type": "hint", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "title": "Title", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit augue duis urna nibh arcu. Faucibus sit consectetur sit cum. Arcu ac facilisis neque, orci urna vitae molestie in neque. Pellentesque vitae nisi non vitae elit et massa."},
-            {"type": "videoHint", "text":"Videos", "title":"Title", "videoUrl":"https://www.youtube.com/watch?v=u31qwQUeGuM"}
+            {"type": "textarea", "placeholder": "", "label": "Notes for My Executor(s)", "prefill": "front end:location data for will"}
+            ,{"title":"Where do you place will tips 001","text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit.","type":"hint","link":""},{"title":"Where do you place will tips 002","text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit.","type":"hint","link":""},{"title":"Where do you place will tips 003","text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit.","type":"hint","link":""},{"title":"Where do you place will tips 004","text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit.","type":"hint","link":""}
         ],
-        "breadCrumb": [{"text":"Will Location", "status":"active"},{"text":"Upload Will", "status":"pending"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
-        "label": "Important",
-        "continueBtn": {"visible":true, "clickAction": {"userId": "", "categoryId":"", "topicId":"", "stepId":"", "data":{"question":{}}}},
+        "label": "Optional",
+        "continueBtn": {"visible":true, "clickAction": "apiCall"},
         "visible":true
     },
     {
         "step": 3,
+        "activBreadCrumb": "Upload Will",
         "title": "Upload Will-related files?",
-        "discription": "You have the option to upload your Will or any related files. Note that your Executor will need the original paper-version for the court. Also remember that best practice is to not share the Will with your beneficiaries until after you pass. If you do upload your Will, remember to Manage Access to the Will appropriately.",
+        "description": "You have the option to upload your Will or any related files. Note that your Executor will need the original paper-version for the court. Also remember that best practice is to not share the Will with your beneficiaries until after you pass. If you do upload your Will, remember to Manage Access to the Will appropriately.",
         "inputList": [
-            {"type": "fileUploader", "text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "prefill": "prefill data"}
+            {"type": "fileUploader", "text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "prefill": ""}
+            
         ],
-        "breadCrumb":[{"text":"Will Location", "status":"done"},{"text":"Upload Will", "status":"active"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
+        "documents" : [{"document_id":1122,"question_id":210000003,"originalname":"dummy.pdf","filename":"2022061405363710836-IBFile.pdf"}],
         "label": "Optional",
         "continueBtn": {"visible":true, "clickAction": "apiCall"},
         "visible":true
     },
     {
         "step": 4,
+        "activBreadCrumb": "Beneficiaries",
         "title": "Do you want to add beneficiaries at this point?",
-        "discription": "Your Will may list your beneficiaries, without their contact info. Some users find it useful to provide the latest contact info of their beneficiaries here. In case you don’t want to identify your beneficiaries, you can still provide contact info of friends and family in the ‘Key Contacts’ category.",
+        "description": "Your Will may list your beneficiaries, without their contact info. Some users find it useful to provide the latest contact info of their beneficiaries here. In case you don’t want to identify your beneficiaries, you can still provide contact info of friends and family in the Key Contacts category.",
         "inputList": [
             {"type": "yesNoButton", "text1": "Yes", "text2": "No, I’ll add them later"}
+            
         ],
-        "breadCrumb":[{"text":"Will Location", "status":"done"},{"text":"Upload Will", "status":"active"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
-        "label": "Optional",
-        "continueBtn":{"visible":false, "clickAction": {}},
-        "visible":true
+        "label": "",
+        "continueBtn":{"visible":false, "clickAction": "apiCall"},
+        "visible":false
     },
     {
         "step": 5,
-        "question_id": "",
+        "activBreadCrumb": "Beneficiaries",
         "title": "Enter beneficiary information",
-        "discription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elit ultrices diam a nibh eget nibh massa. Tellus rhoncus volutpat libero sit in fusce augue id.",
+        "description": "Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content.",
+        "inputList": [
+            {"type": "dropDown", "options": ["Mother", "Father", "Brother", "Sister", "Son", "Daughter"], "label": "Relationship", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "textInput", "label": "First name", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "textInput", "label": "Middle name", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "textInput", "label": "Last name", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "smallTextInput", "label": "Suffix", "placeholder": "XXX", "prefill": "prefill data"},
+            {"type": "textInput", "label": "Email", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "dateInput", "label": "Date of Birth", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "textInput", "label": "Address 1", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "textInput", "label": "Address 2", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "textInput", "label": "City", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "textInput", "label": "State", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "dropDown", "options": [{"country_id":"1001", "country_name":"Afghanistan"},{"country_id":"1002", "country_name":"Aland Islands"},{"country_id":"1003", "country_name":"Albania"},{"country_id":"1004", "country_name":"Algeria"},{"country_id":"1005", "country_name":"American Samoa"},{"country_id":"1006", "country_name":"Andorra"},{"country_id":"1007", "country_name":"Angola"},{"country_id":"1008", "country_name":"Anguilla"},{"country_id":"1009", "country_name":"Antarctica"},{"country_id":"1010", "country_name":"Antigua and Barbuda"},{"country_id":"1011", "country_name":"Argentina"},{"country_id":"1012", "country_name":"Armenia"},{"country_id":"1013", "country_name":"Aruba"},{"country_id":"1014", "country_name":"Australia"},{"country_id":"1015", "country_name":"Austria"},{"country_id":"1016", "country_name":"Azerbaijan"},{"country_id":"1017", "country_name":"Bahamas"},{"country_id":"1018", "country_name":"Bahrain"},{"country_id":"1019", "country_name":"Bangladesh"},{"country_id":"1020", "country_name":"Barbados"},{"country_id":"1021", "country_name":"Belarus"},{"country_id":"1022", "country_name":"Belgium"},{"country_id":"1023", "country_name":"Belize"},{"country_id":"1024", "country_name":"Benin"},{"country_id":"1025", "country_name":"Bermuda"},{"country_id":"1026", "country_name":"Bhutan"},{"country_id":"1027", "country_name":"Bolivia"},{"country_id":"1028", "country_name":"Bonaire, Sint Eustatius and Saba"},{"country_id":"1029", "country_name":"Bosnia and Herzegovina"},{"country_id":"1030", "country_name":"Botswana"},{"country_id":"1031", "country_name":"Bouvet Island"},{"country_id":"1032", "country_name":"Brazil"},{"country_id":"1033", "country_name":"British Indian Ocean Territory"},{"country_id":"1034", "country_name":"Brunei Darussalam"},{"country_id":"1035", "country_name":"Bulgaria"},{"country_id":"1036", "country_name":"Burkina Faso"},{"country_id":"1037", "country_name":"Burundi"},{"country_id":"1038", "country_name":"Cambodia"},{"country_id":"1039", "country_name":"Cameroon"},{"country_id":"1040", "country_name":"Canada"},{"country_id":"1041", "country_name":"Cape Verde"},{"country_id":"1042", "country_name":"Cayman Islands"},{"country_id":"1043", "country_name":"Central African Republic"},{"country_id":"1044", "country_name":"Chad"},{"country_id":"1045", "country_name":"Chile"},{"country_id":"1046", "country_name":"China"},{"country_id":"1047", "country_name":"Christmas Island"},{"country_id":"1048", "country_name":"Cocos (Keeling) Islands"},{"country_id":"1049", "country_name":"Colombia"},{"country_id":"1050", "country_name":"Comoros"},{"country_id":"1051", "country_name":"Congo"},{"country_id":"1052", "country_name":"Congo, Democratic Republic of the Congo"},{"country_id":"1053", "country_name":"Cook Islands"},{"country_id":"1054", "country_name":"Costa Rica"},{"country_id":"1055", "country_name":"Cote D&#39;Ivoire"},{"country_id":"1056", "country_name":"Croatia"},{"country_id":"1057", "country_name":"Cuba"},{"country_id":"1058", "country_name":"Curacao"},{"country_id":"1059", "country_name":"Cyprus"},{"country_id":"1060", "country_name":"Czech Republic"},{"country_id":"1061", "country_name":"Denmark"},{"country_id":"1062", "country_name":"Djibouti"},{"country_id":"1063", "country_name":"Dominica"},{"country_id":"1064", "country_name":"Dominican Republic"},{"country_id":"1065", "country_name":"Ecuador"},{"country_id":"1066", "country_name":"Egypt"},{"country_id":"1067", "country_name":"El Salvador"},{"country_id":"1068", "country_name":"Equatorial Guinea"},{"country_id":"1069", "country_name":"Eritrea"},{"country_id":"1070", "country_name":"Estonia"},{"country_id":"1071", "country_name":"Ethiopia"},{"country_id":"1072", "country_name":"Falkland Islands (Malvinas)"},{"country_id":"1073", "country_name":"Faroe Islands"},{"country_id":"1074", "country_name":"Fiji"},{"country_id":"1075", "country_name":"Finland"},{"country_id":"1076", "country_name":"France"},{"country_id":"1077", "country_name":"French Guiana"},{"country_id":"1078", "country_name":"French Polynesia"},{"country_id":"1079", "country_name":"French Southern Territories"},{"country_id":"1080", "country_name":"Gabon"},{"country_id":"1081", "country_name":"Gambia"},{"country_id":"1082", "country_name":"Georgia"},{"country_id":"1083", "country_name":"Germany"},{"country_id":"1084", "country_name":"Ghana"},{"country_id":"1085", "country_name":"Gibraltar"},{"country_id":"1086", "country_name":"Greece"},{"country_id":"1087", "country_name":"Greenland"},{"country_id":"1088", "country_name":"Grenada"},{"country_id":"1089", "country_name":"Guadeloupe"},{"country_id":"1090", "country_name":"Guam"},{"country_id":"1091", "country_name":"Guatemala"},{"country_id":"1092", "country_name":"Guernsey"},{"country_id":"1093", "country_name":"Guinea"},{"country_id":"1094", "country_name":"Guinea-Bissau"},{"country_id":"1095", "country_name":"Guyana"},{"country_id":"1096", "country_name":"Haiti"},{"country_id":"1097", "country_name":"Heard Island and Mcdonald Islands"},{"country_id":"1098", "country_name":"Holy See (Vatican City State)"},{"country_id":"1099", "country_name":"Honduras"},{"country_id":"1100", "country_name":"Hong Kong"},{"country_id":"1101", "country_name":"Hungary"},{"country_id":"1102", "country_name":"Iceland"},{"country_id":"1103", "country_name":"India"},{"country_id":"1104", "country_name":"Indonesia"},{"country_id":"1105", "country_name":"Iran, Islamic Republic of"},{"country_id":"1106", "country_name":"Iraq"},{"country_id":"1107", "country_name":"Ireland"},{"country_id":"1108", "country_name":"Isle of Man"},{"country_id":"1109", "country_name":"Israel"},{"country_id":"1110", "country_name":"Italy"},{"country_id":"1111", "country_name":"Jamaica"},{"country_id":"1112", "country_name":"Japan"},{"country_id":"1113", "country_name":"Jersey"},{"country_id":"1114", "country_name":"Jordan"},{"country_id":"1115", "country_name":"Kazakhstan"},{"country_id":"1116", "country_name":"Kenya"},{"country_id":"1117", "country_name":"Kiribati"},{"country_id":"1118", "country_name":"Korea, Democratic People&#39;s Republic of"},{"country_id":"1119", "country_name":"Korea, Republic of"},{"country_id":"1120", "country_name":"Kosovo"},{"country_id":"1121", "country_name":"Kuwait"},{"country_id":"1122", "country_name":"Kyrgyzstan"},{"country_id":"1123", "country_name":"Lao People&#39;s Democratic Republic"},{"country_id":"1124", "country_name":"Latvia"},{"country_id":"1125", "country_name":"Lebanon"},{"country_id":"1126", "country_name":"Lesotho"},{"country_id":"1127", "country_name":"Liberia"},{"country_id":"1128", "country_name":"Libyan Arab Jamahiriya"},{"country_id":"1129", "country_name":"Liechtenstein"},{"country_id":"1130", "country_name":"Lithuania"},{"country_id":"1131", "country_name":"Luxembourg"},{"country_id":"1132", "country_name":"Macao"},{"country_id":"1133", "country_name":"Macedonia, the Former Yugoslav Republic of"},{"country_id":"1134", "country_name":"Madagascar"},{"country_id":"1135", "country_name":"Malawi"},{"country_id":"1136", "country_name":"Malaysia"},{"country_id":"1137", "country_name":"Maldives"},{"country_id":"1138", "country_name":"Mali"},{"country_id":"1139", "country_name":"Malta"},{"country_id":"1140", "country_name":"Marshall Islands"},{"country_id":"1141", "country_name":"Martinique"},{"country_id":"1142", "country_name":"Mauritania"},{"country_id":"1143", "country_name":"Mauritius"},{"country_id":"1144", "country_name":"Mayotte"},{"country_id":"1145", "country_name":"Mexico"},{"country_id":"1146", "country_name":"Micronesia, Federated States of"},{"country_id":"1147", "country_name":"Moldova, Republic of"},{"country_id":"1148", "country_name":"Monaco"},{"country_id":"1149", "country_name":"Mongolia"},{"country_id":"1150", "country_name":"Montenegro"},{"country_id":"1151", "country_name":"Montserrat"},{"country_id":"1152", "country_name":"Morocco"},{"country_id":"1153", "country_name":"Mozambique"},{"country_id":"1154", "country_name":"Myanmar"},{"country_id":"1155", "country_name":"Namibia"},{"country_id":"1156", "country_name":"Nauru"},{"country_id":"1157", "country_name":"Nepal"},{"country_id":"1158", "country_name":"Netherlands"},{"country_id":"1159", "country_name":"Netherlands Antilles"},{"country_id":"1160", "country_name":"New Caledonia"},{"country_id":"1161", "country_name":"New Zealand"},{"country_id":"1162", "country_name":"Nicaragua"},{"country_id":"1163", "country_name":"Niger"},{"country_id":"1164", "country_name":"Nigeria"},{"country_id":"1165", "country_name":"Niue"},{"country_id":"1166", "country_name":"Norfolk Island"},{"country_id":"1167", "country_name":"Northern Mariana Islands"},{"country_id":"1168", "country_name":"Norway"},{"country_id":"1169", "country_name":"Oman"},{"country_id":"1170", "country_name":"Pakistan"},{"country_id":"1171", "country_name":"Palau"},{"country_id":"1172", "country_name":"Palestinian Territory, Occupied"},{"country_id":"1173", "country_name":"Panama"},{"country_id":"1174", "country_name":"Papua New Guinea"},{"country_id":"1175", "country_name":"Paraguay"},{"country_id":"1176", "country_name":"Peru"},{"country_id":"1177", "country_name":"Philippines"},{"country_id":"1178", "country_name":"Pitcairn"},{"country_id":"1179", "country_name":"Poland"},{"country_id":"1180", "country_name":"Portugal"},{"country_id":"1181", "country_name":"Puerto Rico"},{"country_id":"1182", "country_name":"Qatar"},{"country_id":"1183", "country_name":"Reunion"},{"country_id":"1184", "country_name":"Romania"},{"country_id":"1185", "country_name":"Russian Federation"},{"country_id":"1186", "country_name":"Rwanda"},{"country_id":"1187", "country_name":"Saint Barthelemy"},{"country_id":"1188", "country_name":"Saint Helena"},{"country_id":"1189", "country_name":"Saint Kitts and Nevis"},{"country_id":"1190", "country_name":"Saint Lucia"},{"country_id":"1191", "country_name":"Saint Martin"},{"country_id":"1192", "country_name":"Saint Pierre and Miquelon"},{"country_id":"1193", "country_name":"Saint Vincent and the Grenadines"},{"country_id":"1194", "country_name":"Samoa"},{"country_id":"1195", "country_name":"San Marino"},{"country_id":"1196", "country_name":"Sao Tome and Principe"},{"country_id":"1197", "country_name":"Saudi Arabia"},{"country_id":"1198", "country_name":"Senegal"},{"country_id":"1199", "country_name":"Serbia"},{"country_id":"1200", "country_name":"Serbia and Montenegro"},{"country_id":"1201", "country_name":"Seychelles"},{"country_id":"1202", "country_name":"Sierra Leone"},{"country_id":"1203", "country_name":"Singapore"},{"country_id":"1204", "country_name":"Sint Maarten"},{"country_id":"1205", "country_name":"Slovakia"},{"country_id":"1206", "country_name":"Slovenia"},{"country_id":"1207", "country_name":"Solomon Islands"},{"country_id":"1208", "country_name":"Somalia"},{"country_id":"1209", "country_name":"South Africa"},{"country_id":"1210", "country_name":"South Georgia and the South Sandwich Islands"},{"country_id":"1211", "country_name":"South Sudan"},{"country_id":"1212", "country_name":"Spain"},{"country_id":"1213", "country_name":"Sri Lanka"},{"country_id":"1214", "country_name":"Sudan"},{"country_id":"1215", "country_name":"Suriname"},{"country_id":"1216", "country_name":"Svalbard and Jan Mayen"},{"country_id":"1217", "country_name":"Swaziland"},{"country_id":"1218", "country_name":"Sweden"},{"country_id":"1219", "country_name":"Switzerland"},{"country_id":"1220", "country_name":"Syrian Arab Republic"},{"country_id":"1221", "country_name":"Taiwan, Province of China"},{"country_id":"1222", "country_name":"Tajikistan"},{"country_id":"1223", "country_name":"Tanzania, United Republic of"},{"country_id":"1224", "country_name":"Thailand"},{"country_id":"1225", "country_name":"Timor-Leste"},{"country_id":"1226", "country_name":"Togo"},{"country_id":"1227", "country_name":"Tokelau"},{"country_id":"1228", "country_name":"Tonga"},{"country_id":"1229", "country_name":"Trinidad and Tobago"},{"country_id":"1230", "country_name":"Tunisia"},{"country_id":"1231", "country_name":"Turkey"},{"country_id":"1232", "country_name":"Turkmenistan"},{"country_id":"1233", "country_name":"Turks and Caicos Islands"},{"country_id":"1234", "country_name":"Tuvalu"},{"country_id":"1235", "country_name":"Uganda"},{"country_id":"1236", "country_name":"Ukraine"},{"country_id":"1237", "country_name":"United Arab Emirates"},{"country_id":"1238", "country_name":"United Kingdom"},{"country_id":"1239", "country_name":"United States"},{"country_id":"1240", "country_name":"United States Minor Outlying Islands"},{"country_id":"1241", "country_name":"Uruguay"},{"country_id":"1242", "country_name":"Uzbekistan"},{"country_id":"1243", "country_name":"Vanuatu"},{"country_id":"1244", "country_name":"Venezuela"},{"country_id":"1245", "country_name":"Viet Nam"},{"country_id":"1246", "country_name":"Virgin Islands, British"},{"country_id":"1247", "country_name":"Virgin Islands, U.s."},{"country_id":"1248", "country_name":"Wallis and Futuna"},{"country_id":"1249", "country_name":"Western Sahara"},{"country_id":"1250", "country_name":"Yemen"},{"country_id":"1251", "country_name":"Zambia"},{"country_id":"1252", "country_name":"Zimbabwe"}], "label": "Country", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "textInput", "label": "Zip/postal code", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "textInput", "label": "Phone No", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "dropDown", "options": ["Option 1", "Option 2", "Option 3", "Option 4"], "label": "Category", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "fileUploader", "text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "prefill": "prefill data"},
+            {"type": "textarea", "placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus augue vulputate quis vitae. Semper aliquet tortor sed mattis. Nibh nec arcu mattis consectetur mauris id interdum turpis pharetra. Vitae orci eu massa ut nunc congue tempor.", "label": "Notes", "prefill": "prefill data"}
+        ],
+        "label": "",
+        "continueBtn": {"visible":true, "clickAction": "apiCall"},
+        "visible":true
+    },
+    {
+        "step": 6,
+        "activBreadCrumb": "Beneficiaries",
+        "title": "Your beneficiaries",
+        "description": "List of beneficiaries. Click on the name to see a summary view.",
+        "inputList": [
+            {"type": "table", "titles": ["Details","Action"], "rows": [{"image": "www.imageurl.com", "details": [{"lable":"Lable 1", "value":"Value 1"},{"lable":"Lable 2", "value":"Value 2"}], "buttons": ["edit", "delete"]}, {"image": "www.imageurl.com", "name": "Abram Curtis", "buttons": ["edit", "delete"]}]},
+            {"type": "button", "text": "Add another"}
+            
+        ],
+        "table_data" : [{"contact_type_id":101,"question_id":210000008,"key_contact_id":4000000050,"first_name":"Krishna ","middle_name":"testhh","last_name":"Yadav","suffix":"","email":"kanha@gmail.com","phone_no":"9898786763","date_of_birth":"0000-00-00","address_line1":"Ruchi khand","address_line2":"kanpur road","city":"Lucknow","state":"UP","country_id":1103,"zip_code":"226003","notes":"","category":"Option 1","relationship":"Son"},{"contact_type_id":101,"question_id":210000008,"key_contact_id":4000000051,"first_name":"Test","middle_name":"","last_name":"Test","suffix":"","email":"","phone_no":"","date_of_birth":"0000-00-00","address_line1":"","address_line2":"","city":"","state":"","country_id":1103,"zip_code":"","notes":"","category":"prefill data","relationship":"Sister"}],
+        "label": "Optional",
+        "continueBtn": {"visible":true, "clickAction": "apiCall"},
+        "visible":true
+    },
+    {
+        "step": 7,
+        "activBreadCrumb": "Executors",
+        "title": "Do you want to add Executors at this point?",
+        "description": "Please enter your Executors here. To invite an Executor, please visit Manage Access.",
+        "inputList": [
+            {"type": "yesNoButton", "text1": "Yes", "text2": "No, I’ll add them later"}
+            
+        ],
+        "label": "",
+        "continueBtn": {"visible":false, "clickAction": "apiCall"},
+        "visible": true
+    },
+    {
+        "step": 8,
+        "activBreadCrumb": "Executors",
+        "title": "Enter executor information",
+        "description": "Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content.",
         "inputList": [
             {"type": "dropDown", "options": ["Mother", "Father", "Brother", "Sister", "Son", "Daughter"], "id":"relationship", "label": "Relationship", "placeholder": "placeholder", "prefill": ""},
-            {"type": "textInput", "label": "First name", "placeholder": "placeholder", "prefill": "", "id":"firstname"},
-            {"type": "textInput", "label": "Middle name", "placeholder": "placeholder", "prefill": "", "id":"middlename"},
-            {"type": "textInput", "label": "Last name", "placeholder": "placeholder", "prefill": "", "id":"lastname"},
+            {"type": "textInput", "label": "First name", "placeholder": "placeholder", "prefill": "", "id":"first_name"},
+            {"type": "textInput", "label": "Middle name", "placeholder": "placeholder", "prefill": "", "id":"middle_name"},
+            {"type": "textInput", "label": "Last name", "placeholder": "placeholder", "prefill": "", "id":"last_name"},
             {"type": "smallTextInput", "label": "Suffix", "placeholder": "XXX", "prefill": "", "id":"suffix"},
             {"type": "textInput", "label": "Email", "placeholder": "placeholder", "prefill": "", "id":"email"},
-            {"type": "date", "label": "Birth Date", "placeholder": "placeholder", "prefill": "", "id":"dob"},
+            {"type": "date", "label": "Birth Date", "placeholder": "placeholder", "prefill": "", "id":"date_of_birth"},
             {"type": "textInput", "label": "Address 1", "placeholder": "placeholder", "prefill": "", "id":"address_line1"},
             {"type": "textInput", "label": "Address 2", "placeholder": "placeholder", "prefill": "", "id":"address_line2"},
             {"type": "textInput", "label": "City", "placeholder": "placeholder", "prefill": "", "id":"city"},
             {"type": "textInput", "label": "State", "placeholder": "placeholder", "prefill": "", "id":"state"},
-            {"type": "textInput", "label": "Zip/postal code", "placeholder": "placeholder", "prefill": "", "id":"zip"},
-            {"type": "textInput", "label": "Country", "placeholder": "placeholder", "prefill": "", "id":"country_id"},
-            {"type": "textInput", "label": "Phone No", "placeholder": "placeholder", "prefill": "", "id": "phone"},
+            {"type": "dropDown", "options": [{"country_id":"1001", "country_name":"Afghanistan"},{"country_id":"1002", "country_name":"Aland Islands"},{"country_id":"1003", "country_name":"Albania"},{"country_id":"1004", "country_name":"Algeria"},{"country_id":"1005", "country_name":"American Samoa"},{"country_id":"1006", "country_name":"Andorra"},{"country_id":"1007", "country_name":"Angola"},{"country_id":"1008", "country_name":"Anguilla"},{"country_id":"1009", "country_name":"Antarctica"},{"country_id":"1010", "country_name":"Antigua and Barbuda"},{"country_id":"1011", "country_name":"Argentina"},{"country_id":"1012", "country_name":"Armenia"},{"country_id":"1013", "country_name":"Aruba"},{"country_id":"1014", "country_name":"Australia"},{"country_id":"1015", "country_name":"Austria"},{"country_id":"1016", "country_name":"Azerbaijan"},{"country_id":"1017", "country_name":"Bahamas"},{"country_id":"1018", "country_name":"Bahrain"},{"country_id":"1019", "country_name":"Bangladesh"},{"country_id":"1020", "country_name":"Barbados"},{"country_id":"1021", "country_name":"Belarus"},{"country_id":"1022", "country_name":"Belgium"},{"country_id":"1023", "country_name":"Belize"},{"country_id":"1024", "country_name":"Benin"},{"country_id":"1025", "country_name":"Bermuda"},{"country_id":"1026", "country_name":"Bhutan"},{"country_id":"1027", "country_name":"Bolivia"},{"country_id":"1028", "country_name":"Bonaire, Sint Eustatius and Saba"},{"country_id":"1029", "country_name":"Bosnia and Herzegovina"},{"country_id":"1030", "country_name":"Botswana"},{"country_id":"1031", "country_name":"Bouvet Island"},{"country_id":"1032", "country_name":"Brazil"},{"country_id":"1033", "country_name":"British Indian Ocean Territory"},{"country_id":"1034", "country_name":"Brunei Darussalam"},{"country_id":"1035", "country_name":"Bulgaria"},{"country_id":"1036", "country_name":"Burkina Faso"},{"country_id":"1037", "country_name":"Burundi"},{"country_id":"1038", "country_name":"Cambodia"},{"country_id":"1039", "country_name":"Cameroon"},{"country_id":"1040", "country_name":"Canada"},{"country_id":"1041", "country_name":"Cape Verde"},{"country_id":"1042", "country_name":"Cayman Islands"},{"country_id":"1043", "country_name":"Central African Republic"},{"country_id":"1044", "country_name":"Chad"},{"country_id":"1045", "country_name":"Chile"},{"country_id":"1046", "country_name":"China"},{"country_id":"1047", "country_name":"Christmas Island"},{"country_id":"1048", "country_name":"Cocos (Keeling) Islands"},{"country_id":"1049", "country_name":"Colombia"},{"country_id":"1050", "country_name":"Comoros"},{"country_id":"1051", "country_name":"Congo"},{"country_id":"1052", "country_name":"Congo, Democratic Republic of the Congo"},{"country_id":"1053", "country_name":"Cook Islands"},{"country_id":"1054", "country_name":"Costa Rica"},{"country_id":"1055", "country_name":"Cote D&#39;Ivoire"},{"country_id":"1056", "country_name":"Croatia"},{"country_id":"1057", "country_name":"Cuba"},{"country_id":"1058", "country_name":"Curacao"},{"country_id":"1059", "country_name":"Cyprus"},{"country_id":"1060", "country_name":"Czech Republic"},{"country_id":"1061", "country_name":"Denmark"},{"country_id":"1062", "country_name":"Djibouti"},{"country_id":"1063", "country_name":"Dominica"},{"country_id":"1064", "country_name":"Dominican Republic"},{"country_id":"1065", "country_name":"Ecuador"},{"country_id":"1066", "country_name":"Egypt"},{"country_id":"1067", "country_name":"El Salvador"},{"country_id":"1068", "country_name":"Equatorial Guinea"},{"country_id":"1069", "country_name":"Eritrea"},{"country_id":"1070", "country_name":"Estonia"},{"country_id":"1071", "country_name":"Ethiopia"},{"country_id":"1072", "country_name":"Falkland Islands (Malvinas)"},{"country_id":"1073", "country_name":"Faroe Islands"},{"country_id":"1074", "country_name":"Fiji"},{"country_id":"1075", "country_name":"Finland"},{"country_id":"1076", "country_name":"France"},{"country_id":"1077", "country_name":"French Guiana"},{"country_id":"1078", "country_name":"French Polynesia"},{"country_id":"1079", "country_name":"French Southern Territories"},{"country_id":"1080", "country_name":"Gabon"},{"country_id":"1081", "country_name":"Gambia"},{"country_id":"1082", "country_name":"Georgia"},{"country_id":"1083", "country_name":"Germany"},{"country_id":"1084", "country_name":"Ghana"},{"country_id":"1085", "country_name":"Gibraltar"},{"country_id":"1086", "country_name":"Greece"},{"country_id":"1087", "country_name":"Greenland"},{"country_id":"1088", "country_name":"Grenada"},{"country_id":"1089", "country_name":"Guadeloupe"},{"country_id":"1090", "country_name":"Guam"},{"country_id":"1091", "country_name":"Guatemala"},{"country_id":"1092", "country_name":"Guernsey"},{"country_id":"1093", "country_name":"Guinea"},{"country_id":"1094", "country_name":"Guinea-Bissau"},{"country_id":"1095", "country_name":"Guyana"},{"country_id":"1096", "country_name":"Haiti"},{"country_id":"1097", "country_name":"Heard Island and Mcdonald Islands"},{"country_id":"1098", "country_name":"Holy See (Vatican City State)"},{"country_id":"1099", "country_name":"Honduras"},{"country_id":"1100", "country_name":"Hong Kong"},{"country_id":"1101", "country_name":"Hungary"},{"country_id":"1102", "country_name":"Iceland"},{"country_id":"1103", "country_name":"India"},{"country_id":"1104", "country_name":"Indonesia"},{"country_id":"1105", "country_name":"Iran, Islamic Republic of"},{"country_id":"1106", "country_name":"Iraq"},{"country_id":"1107", "country_name":"Ireland"},{"country_id":"1108", "country_name":"Isle of Man"},{"country_id":"1109", "country_name":"Israel"},{"country_id":"1110", "country_name":"Italy"},{"country_id":"1111", "country_name":"Jamaica"},{"country_id":"1112", "country_name":"Japan"},{"country_id":"1113", "country_name":"Jersey"},{"country_id":"1114", "country_name":"Jordan"},{"country_id":"1115", "country_name":"Kazakhstan"},{"country_id":"1116", "country_name":"Kenya"},{"country_id":"1117", "country_name":"Kiribati"},{"country_id":"1118", "country_name":"Korea, Democratic People&#39;s Republic of"},{"country_id":"1119", "country_name":"Korea, Republic of"},{"country_id":"1120", "country_name":"Kosovo"},{"country_id":"1121", "country_name":"Kuwait"},{"country_id":"1122", "country_name":"Kyrgyzstan"},{"country_id":"1123", "country_name":"Lao People&#39;s Democratic Republic"},{"country_id":"1124", "country_name":"Latvia"},{"country_id":"1125", "country_name":"Lebanon"},{"country_id":"1126", "country_name":"Lesotho"},{"country_id":"1127", "country_name":"Liberia"},{"country_id":"1128", "country_name":"Libyan Arab Jamahiriya"},{"country_id":"1129", "country_name":"Liechtenstein"},{"country_id":"1130", "country_name":"Lithuania"},{"country_id":"1131", "country_name":"Luxembourg"},{"country_id":"1132", "country_name":"Macao"},{"country_id":"1133", "country_name":"Macedonia, the Former Yugoslav Republic of"},{"country_id":"1134", "country_name":"Madagascar"},{"country_id":"1135", "country_name":"Malawi"},{"country_id":"1136", "country_name":"Malaysia"},{"country_id":"1137", "country_name":"Maldives"},{"country_id":"1138", "country_name":"Mali"},{"country_id":"1139", "country_name":"Malta"},{"country_id":"1140", "country_name":"Marshall Islands"},{"country_id":"1141", "country_name":"Martinique"},{"country_id":"1142", "country_name":"Mauritania"},{"country_id":"1143", "country_name":"Mauritius"},{"country_id":"1144", "country_name":"Mayotte"},{"country_id":"1145", "country_name":"Mexico"},{"country_id":"1146", "country_name":"Micronesia, Federated States of"},{"country_id":"1147", "country_name":"Moldova, Republic of"},{"country_id":"1148", "country_name":"Monaco"},{"country_id":"1149", "country_name":"Mongolia"},{"country_id":"1150", "country_name":"Montenegro"},{"country_id":"1151", "country_name":"Montserrat"},{"country_id":"1152", "country_name":"Morocco"},{"country_id":"1153", "country_name":"Mozambique"},{"country_id":"1154", "country_name":"Myanmar"},{"country_id":"1155", "country_name":"Namibia"},{"country_id":"1156", "country_name":"Nauru"},{"country_id":"1157", "country_name":"Nepal"},{"country_id":"1158", "country_name":"Netherlands"},{"country_id":"1159", "country_name":"Netherlands Antilles"},{"country_id":"1160", "country_name":"New Caledonia"},{"country_id":"1161", "country_name":"New Zealand"},{"country_id":"1162", "country_name":"Nicaragua"},{"country_id":"1163", "country_name":"Niger"},{"country_id":"1164", "country_name":"Nigeria"},{"country_id":"1165", "country_name":"Niue"},{"country_id":"1166", "country_name":"Norfolk Island"},{"country_id":"1167", "country_name":"Northern Mariana Islands"},{"country_id":"1168", "country_name":"Norway"},{"country_id":"1169", "country_name":"Oman"},{"country_id":"1170", "country_name":"Pakistan"},{"country_id":"1171", "country_name":"Palau"},{"country_id":"1172", "country_name":"Palestinian Territory, Occupied"},{"country_id":"1173", "country_name":"Panama"},{"country_id":"1174", "country_name":"Papua New Guinea"},{"country_id":"1175", "country_name":"Paraguay"},{"country_id":"1176", "country_name":"Peru"},{"country_id":"1177", "country_name":"Philippines"},{"country_id":"1178", "country_name":"Pitcairn"},{"country_id":"1179", "country_name":"Poland"},{"country_id":"1180", "country_name":"Portugal"},{"country_id":"1181", "country_name":"Puerto Rico"},{"country_id":"1182", "country_name":"Qatar"},{"country_id":"1183", "country_name":"Reunion"},{"country_id":"1184", "country_name":"Romania"},{"country_id":"1185", "country_name":"Russian Federation"},{"country_id":"1186", "country_name":"Rwanda"},{"country_id":"1187", "country_name":"Saint Barthelemy"},{"country_id":"1188", "country_name":"Saint Helena"},{"country_id":"1189", "country_name":"Saint Kitts and Nevis"},{"country_id":"1190", "country_name":"Saint Lucia"},{"country_id":"1191", "country_name":"Saint Martin"},{"country_id":"1192", "country_name":"Saint Pierre and Miquelon"},{"country_id":"1193", "country_name":"Saint Vincent and the Grenadines"},{"country_id":"1194", "country_name":"Samoa"},{"country_id":"1195", "country_name":"San Marino"},{"country_id":"1196", "country_name":"Sao Tome and Principe"},{"country_id":"1197", "country_name":"Saudi Arabia"},{"country_id":"1198", "country_name":"Senegal"},{"country_id":"1199", "country_name":"Serbia"},{"country_id":"1200", "country_name":"Serbia and Montenegro"},{"country_id":"1201", "country_name":"Seychelles"},{"country_id":"1202", "country_name":"Sierra Leone"},{"country_id":"1203", "country_name":"Singapore"},{"country_id":"1204", "country_name":"Sint Maarten"},{"country_id":"1205", "country_name":"Slovakia"},{"country_id":"1206", "country_name":"Slovenia"},{"country_id":"1207", "country_name":"Solomon Islands"},{"country_id":"1208", "country_name":"Somalia"},{"country_id":"1209", "country_name":"South Africa"},{"country_id":"1210", "country_name":"South Georgia and the South Sandwich Islands"},{"country_id":"1211", "country_name":"South Sudan"},{"country_id":"1212", "country_name":"Spain"},{"country_id":"1213", "country_name":"Sri Lanka"},{"country_id":"1214", "country_name":"Sudan"},{"country_id":"1215", "country_name":"Suriname"},{"country_id":"1216", "country_name":"Svalbard and Jan Mayen"},{"country_id":"1217", "country_name":"Swaziland"},{"country_id":"1218", "country_name":"Sweden"},{"country_id":"1219", "country_name":"Switzerland"},{"country_id":"1220", "country_name":"Syrian Arab Republic"},{"country_id":"1221", "country_name":"Taiwan, Province of China"},{"country_id":"1222", "country_name":"Tajikistan"},{"country_id":"1223", "country_name":"Tanzania, United Republic of"},{"country_id":"1224", "country_name":"Thailand"},{"country_id":"1225", "country_name":"Timor-Leste"},{"country_id":"1226", "country_name":"Togo"},{"country_id":"1227", "country_name":"Tokelau"},{"country_id":"1228", "country_name":"Tonga"},{"country_id":"1229", "country_name":"Trinidad and Tobago"},{"country_id":"1230", "country_name":"Tunisia"},{"country_id":"1231", "country_name":"Turkey"},{"country_id":"1232", "country_name":"Turkmenistan"},{"country_id":"1233", "country_name":"Turks and Caicos Islands"},{"country_id":"1234", "country_name":"Tuvalu"},{"country_id":"1235", "country_name":"Uganda"},{"country_id":"1236", "country_name":"Ukraine"},{"country_id":"1237", "country_name":"United Arab Emirates"},{"country_id":"1238", "country_name":"United Kingdom"},{"country_id":"1239", "country_name":"United States"},{"country_id":"1240", "country_name":"United States Minor Outlying Islands"},{"country_id":"1241", "country_name":"Uruguay"},{"country_id":"1242", "country_name":"Uzbekistan"},{"country_id":"1243", "country_name":"Vanuatu"},{"country_id":"1244", "country_name":"Venezuela"},{"country_id":"1245", "country_name":"Viet Nam"},{"country_id":"1246", "country_name":"Virgin Islands, British"},{"country_id":"1247", "country_name":"Virgin Islands, U.s."},{"country_id":"1248", "country_name":"Wallis and Futuna"},{"country_id":"1249", "country_name":"Western Sahara"},{"country_id":"1250", "country_name":"Yemen"},{"country_id":"1251", "country_name":"Zambia"},{"country_id":"1252", "country_name":"Zimbabwe"}], "label": "Country", "placeholder": "placeholder", "prefill": "prefill data"},
+            {"type": "textInput", "label": "Zip/postal code", "placeholder": "placeholder", "prefill": "", "id":"zip_code"},
+            {"type": "textInput", "label": "Phone No", "placeholder": "placeholder", "prefill": "", "id": "phone_no"},
             {"type": "dropDown", "options": ["Option 1", "Option 2", "Option 3", "Option 4"], "label": "Category", "id": "category","placeholder": "placeholder", "prefill": "prefill data"},
             {"type": "fileUploader", "text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."},
-            {"type": "textArea", "placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus augue vulputate quis vitae. Semper aliquet tortor sed mattis. Nibh nec arcu mattis consectetur mauris id interdum turpis pharetra. Vitae orci eu massa ut nunc congue tempor.", "label": "Notes", "prefill": "", "id":"notes"}
+            {"type": "textarea", "placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus augue vulputate quis vitae. Semper aliquet tortor sed mattis. Nibh nec arcu mattis consectetur mauris id interdum turpis pharetra. Vitae orci eu massa ut nunc congue tempor.", "label": "Notes", "prefill": "", "id":"notes"}
         ],
-        "breadCrumb":[{"text":"Will Location", "status":"done"},{"text":"Upload Will", "status":"active"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
         "label": "Optional",
-        "continueBtn": {"visible":true, "clickAction": "apiCall"}
-    },
-    {
-        "step": 6,
-        "title": "Your beneficiaries",
-        "discription": "List of beneficiaries. Click on the name to see a summary view.",
-        "inputList": [
-            {"type": "table", "titles": ["Name","Action"], "rows": [{"image": "www.imageurl.com", "name": "Jaydon Calzoni", "buttons": ["edit", "delete"]}, {"image": "www.imageurl.com", "name": "Abram Curtis", "buttons": ["edit", "delete"]}]},
-            {"type": "button", "text": "Add another"}
-        ],
-        "breadCrumb":[{"text":"Will Location", "status":"done"},{"text":"Upload Will", "status":"active"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
-        "label": "Optional",
-        "continueBtn": {"visible":true, "clickAction": "apiCall"}
-    },
-    {
-        "step": 7,
-        "title": "Do you want to add Executors at this point?",
-        "discription": "Please enter your Executors here. To invite an Executor, please visit Manage Access.",
-        "inputList": [
-            {"type": "yesNoButton", "text1": "Yes", "text2": "No, I’ll add them later"}
-        ],
-        "breadCrumb":[{"text":"Will Location", "status":"done"},{"text":"Upload Will", "status":"active"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
-        "label": "Important",
-        "continueBtn": {"visible":false, "clickAction": "apiCall"}
-    },
-    {
-        "step": 8,
-        "title": "Enter executor information",
-        "discription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elit ultrices diam a nibh eget nibh massa. Tellus rhoncus volutpat libero sit in fusce augue id.",
-        "inputList": [
-            {"type": "dropDown", "options": ["Mother", "Father", "Brother", "Sister", "Son", "Daughter"], "id":"relationship", "label": "Relationship", "placeholder": "placeholder", "prefill": ""},
-                {"type": "textInput", "label": "First name", "placeholder": "placeholder", "prefill": "", "id":"firstname"},
-                {"type": "textInput", "label": "Middle name", "placeholder": "placeholder", "prefill": "", "id":"middlename"},
-                {"type": "textInput", "label": "Last name", "placeholder": "placeholder", "prefill": "", "id":"lastname"},
-                {"type": "smallTextInput", "label": "Suffix", "placeholder": "XXX", "prefill": "", "id":"suffix"},
-                {"type": "textInput", "label": "Email", "placeholder": "placeholder", "prefill": "", "id":"email"},
-                {"type": "date", "label": "Birth Date", "placeholder": "placeholder", "prefill": "", "id":"dob"},
-                {"type": "textInput", "label": "Address 1", "placeholder": "placeholder", "prefill": "", "id":"address_line1"},
-                {"type": "textInput", "label": "Address 2", "placeholder": "placeholder", "prefill": "", "id":"address_line2"},
-                {"type": "textInput", "label": "City", "placeholder": "placeholder", "prefill": "", "id":"city"},
-                {"type": "textInput", "label": "State", "placeholder": "placeholder", "prefill": "", "id":"state"},
-                {"type": "textInput", "label": "Zip/postal code", "placeholder": "placeholder", "prefill": "", "id":"zip"},
-                {"type": "textInput", "label": "Country", "placeholder": "placeholder", "prefill": "", "id":"country_id"},
-                {"type": "textInput", "label": "Phone No", "placeholder": "placeholder", "prefill": "", "id": "phone"},
-                {"type": "dropDown", "options": ["Option 1", "Option 2", "Option 3", "Option 4"], "label": "Category", "id": "category","placeholder": "placeholder", "prefill": "prefill data"},
-                {"type": "fileUploader", "text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."},
-                {"type": "textArea", "placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus augue vulputate quis vitae. Semper aliquet tortor sed mattis. Nibh nec arcu mattis consectetur mauris id interdum turpis pharetra. Vitae orci eu massa ut nunc congue tempor.", "label": "Notes", "prefill": "", "id":"notes"}
-        ],
-        "breadCrumb":[{"text":"Will Location", "status":"done"},{"text":"Upload Will", "status":"active"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
-        "label": "Important",
-        "continueBtn": {"visible":true, "clickAction": "apiCall"}
+        "continueBtn": {"visible":true, "clickAction": "apiCall"},
+        "visible":true
+
     },
     {
         "step": 9,
+        "activBreadCrumb": "Executors",
         "title": "Your Executors",
-        "discription": "Please enter your executors here. To invite an Executor, please visit Manage Access.",
+        "description": "List of executers. Click on the name to see a summary view.",
         "inputList": [
-            {"type": "table", "titles": ["Name","Action"], "rows": [{"image": "www.imageurl.com", "name": "Jaydon Calzoni", "buttons": ["edit", "delete"]}, {"image": "www.imageurl.com", "name": "Abram Curtis", "buttons": ["edit", "delete"]}]},
+            {"type": "table", "titles": ["Details","Action"], "rows": [{"image": "www.imageurl.com", "details": [{"lable":"Lable 1", "value":"Value 1"},{"lable":"Lable 2", "value":"Value 2"}], "buttons": ["edit", "delete"]}, {"image": "www.imageurl.com", "name": "Abram Curtis", "buttons": ["edit", "delete"]}]},
             {"type": "button", "text": "Add another"}
         ],
-        "breadCrumb":[{"text":"Will Location", "status":"done"},{"text":"Upload Will", "status":"active"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
-        "label": "Important",
-        "continueBtn": {"visible":true, "clickAction": "apiCall"}
+        "table_data" : [],
+        "label": "Optional",
+        "continueBtn": {"visible":true, "clickAction": "apiCall"},
+        "visible":true
     },
     {
         "step": 10,
-        "title": "Notes regarding your Will",
-        "discription": "Here is your chance to expess your wishes for things not mentioned in your Will. Remember, anything you write here is not legally binding. Also, mention the person to whom your Executor should turn to should they have questions.",
+        "activBreadCrumb": "Notes",
+        "title": "Notes",
+        "description": "Here is your chance to expess your wishes for things not mentioned in your Will. Remember, anything you write here is not legally binding. Also, mention the person to whom your Executor should turn to should they have questions.",
         "inputList": [
-            {"type": "textArea", "placeholder": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus augue vulputate quis vitae. Semper aliquet tortor sed mattis. Nibh nec arcu mattis consectetur mauris id interdum turpis pharetra. Vitae orci eu massa ut nunc congue tempor.", "label": "Notes for My Executor(s)", "prefill": ""}
+            {"type": "textarea", "placeholder": "", "label": "Notes for My Executor(s)", "prefill": "exeutor: notes "}
+            
         ],
-        "breadCrumb":[{"text":"Will Location", "status":"done"},{"text":"Upload Will", "status":"active"},{"text":"Beneficiaries", "status":"pending"},{"text":"Executors", "status":"pending"},{"text":"Notes", "status":"pending"}],
-        "label": "Optional",
+        "label": "Notes",
         "lastStep": true,
-        "continueBtn": {"visible":true, "clickAction": "apiCall"}
+        "continueBtn": {"visible":true, "clickAction": "apiCall"},
+        "visible":true
     }
     ]
 }

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import FlowTitle from '../Component/flowTitle'
 import InputControl from '../Component/inputControl'
-import { Affix, Button, Text, LoadingOverlay } from '@mantine/core'
-import { BiChevronLeft } from 'react-icons/bi'
+import { Affix, Button, Text, LoadingOverlay, Avatar } from '@mantine/core'
+import { BiChevronLeft, BiPencil, BiTrash } from 'react-icons/bi'
 import { RiPagesLine, RiRadioButtonFill } from 'react-icons/ri'
 import axios from 'axios'
 
@@ -11,18 +11,20 @@ import { getWillFlow, listBinderDetails } from '../apis/willFlowApis'
 import Footer from "../Component/footer";
 import BreadCrumbs from '../Component/breadCrumb'
 
-const WillFlow = ({ navigate, counter, setCounter }) => {
+const Trust = ({ navigate, counter, setCounter }) => {
     const [modalMessage, setModalMessage] = useState({})
     const [modalStatus, setModalStatus] = useState(false)
+    const [willFlow, setWillFlow] = useState({})
     const [loading, setLoading] = useState(true)
     const [prevStep, setPrevStep] = useState(-1)
     const [beneficiaries, setBeneficiaries] = useState(true)
     const [executors, setExecutors] = useState(true)
     const [prefill, setPrefill] = useState()
     const [editMode, setEditMode] = useState(false)
-    const willFlowObj = require("../willFlow.json")
-    const [willFlow, setWillFlow] = useState(willFlowObj)
+    // const willFlow = require("../willFlow.json")
     const [answer, setAnswer] = useState()
+    const [listPage, setListPage] = useState(false)
+    const [binderList, setBinderList] = useState({})
     const [questionId, setQuestionId] = useState(false)
 
     const handleClick = (step, btnClick) => {
@@ -92,27 +94,26 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
             data.contact_type_id = editMode?.data?.contact_type_id
             data.key_contact_id = editMode?.data?.key_contact_id
         }
-        // setLoading(true)
-        // getWillFlow("200000001", data).then((response) => {
-        //     console.log("Api call success: ", response.data)
-        //     if (!step.lastStep) {
-        //         setPrevStep(counter)
-        //         setCounter(counter + 1)
-        //     } else {
-        //         navigate(-1)
-        //         setCounter(0)
-        //     }
-        //     setWillFlow(response.data)
-        //     setLoading(false)
-        //     setAnswer()
-        //     setEditMode(false)
-        // }, (error) => {
-        //     console.log("Error in API call: ", error)
-        //     setPrevStep(counter)
-        //     setCounter(counter + 1)
-        //     setLoading(false)
-        // })
-
+        setLoading(true)
+        getWillFlow("200000003", data).then((response) => {
+            console.log("Api call success: ", response.data)
+            if (!step.lastStep) {
+                setPrevStep(counter)
+                setCounter(counter + 1)
+            } else {
+                navigate(-1)
+                setCounter(0)
+            }
+            setWillFlow(response.data)
+            setLoading(false)
+            setAnswer()
+            setEditMode(false)
+        }, (error) => {
+            console.log("Error in API call: ", error)
+            setPrevStep(counter)
+            setCounter(counter + 1)
+            setLoading(false)
+        })
     }
 
     const submitNotes = (step) => {
@@ -143,25 +144,25 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
                 "answer": answer
             }
         }
-        // setLoading(true)
-        // getWillFlow("200000001", data).then((response) => {
-        //     console.log("Api call success: ", response.data)
-        //     if (!step.lastStep) {
-        //         setPrevStep(counter)
-        //         setCounter(counter + 1)
-        //     } else {
-        //         navigate(-1)
-        //         setCounter(0)
-        //     }
-        //     setWillFlow(response.data)
-        //     setLoading(false)
-        //     setAnswer()
-        // }, (error) => {
-        //     console.log("Error in API call: ", error)
-        //     setPrevStep(counter)
-        //     setCounter(counter + 1)
-        //     setLoading(false)
-        // })
+        setLoading(true)
+        getWillFlow("200000003", data).then((response) => {
+            console.log("Api call success: ", response.data)
+            if (!step.lastStep) {
+                setPrevStep(counter)
+                setCounter(counter + 1)
+            } else {
+                navigate(-1)
+                setCounter(0)
+            }
+            setWillFlow(response.data)
+            setLoading(false)
+            setAnswer()
+        }, (error) => {
+            console.log("Error in API call: ", error)
+            setPrevStep(counter)
+            setCounter(counter + 1)
+            setLoading(false)
+        })
     }
 
     const backBtnClick = (step) => {
@@ -193,18 +194,23 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
                 item.prefill = data[item.id]
             })
             console.log("Temp Object from btnCLick: ", temp.steps[counter-1].inputList)
-            // setWillFlow(temp)
+            setWillFlow(temp)
         }
     }
 
     useEffect(() => {
         setLoading(true)
-        // listBinderDetails("200000001").then((response) => {
-        //     console.log("Binder List for topic Id 200000002: ", response.data)
-        // }, (err) => {
-        //     console.log("Error in getting binder List")
-        // })
-        // getWillFlow("200000001").then((response) => {
+        listBinderDetails("200000003").then((response) => {
+            console.log("Binder List for topic Id 200000002: ", response.data)
+            let temp = response.data
+            temp.inputList = response.data.binder_list
+            console.log("Finale temp here: ", temp)
+            setBinderList(temp)
+            setListPage(true)
+        }, (err) => {
+            console.log("Error in getting binder List")
+        })
+        // getWillFlow("200000003").then((response) => {
         //     console.log("Response of get willflow object: ", response.data)
         //     setWillFlow(response.data)
         // }, (error) => {
@@ -213,17 +219,17 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
     }, [])
 
     useEffect(() => {
-        if (Object.keys(willFlow).length > 0) {
+        if (Object.keys(binderList).length > 0) {
             setLoading(false)
         }
-    }, [willFlow])
-
-    // useEffect(() => {
-    //     console.log("Loading changed: ", loading, willFlow)
-    // }, [loading])
+    }, [binderList])
 
     useEffect(() => {
-        if(!loading) {
+        console.log("Loading changed: ", loading, binderList)
+    }, [loading])
+
+    useEffect(() => {
+        if(!loading && !listPage) {
             let temp = willFlow.steps[counter]
             let prefillObj = {}
             let ansObj = {}
@@ -240,7 +246,47 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
             setPrevStep(counter-1)
         }
     }, [counter, loading])
+
+    const deleteKeyContact = (contactTypeId, questionId, keyContactId) => {
+        let data = {
+            "DeleteKeyContact": "Delete",
+            "contact_type_id": contactTypeId,
+            "question_id": questionId,
+            "key_contact_id": keyContactId
+        }
+        getWillFlow(0, data).then((response) => {
+            console.log("Delete contact success response: ", response.data)
+            willFlow.set(response.data)
+        }, (error) => {
+            console.log("Delete contact error: ", error)
+        })
+    }
     
+    const startFlow = (binderId) => {
+        setLoading(true)
+        getWillFlow("200000003", undefined, undefined, binderId).then((response) => {
+            console.log("Response of get willflow object: ", response.data)
+            setWillFlow(response.data)
+            setCounter(0)
+            let temp = response.data.steps[0]
+            let prefillObj = {}
+            let ansObj = {}
+            temp.inputList.map((item, index) => {
+                if(item?.prefill != undefined){
+                    prefillObj = {...prefillObj, [item.label]: item.prefill}
+                    ansObj = {...ansObj, [item?.id]: item.prefill}
+                }
+            })
+            console.log("answer Object: ", ansObj, prefillObj)
+            setPrefill(prefillObj)
+            setAnswer(ansObj)
+            setListPage(false)
+        }, (error) => {
+            console.log("Error in getting willflow object: ", error)
+        })
+        setLoading(false)
+    }
+
 
     if (loading) {
         return (
@@ -250,7 +296,7 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
     return (
         <div style={{ "display": 'flex', 'flexDirection': 'column', 'paddingRight': '2%', 'height': window.innerHeight - 148 }}>
             <TipModal modalMessage={modalMessage} status={modalStatus} setStatus={setModalStatus} />
-            {!loading && <div style={{"display": 'flex', 'flexDirection': 'row', 'justifyContent': 'space-evenly'}}>
+            {!loading && !listPage && <div style={{"display": 'flex', 'flexDirection': 'row', 'justifyContent': 'space-evenly'}}>
                 {willFlow.breadCrumbsList.map((breadCrumb, index) => {
                     // console.log("Breadcrumb List: ", willFlow.steps[counter].activBreadCrumb)
 
@@ -277,7 +323,73 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
                     )
                 })}
             </div>}
-            {!loading && <div style={{ "display": 'flex', 'flexDirection': 'row', 'justifyContent': 'space-between', 'alignContent': 'center' }}>
+            {listPage && <div>
+                {binderList.binder_list.map((item, index) => {
+                    console.log("BinderList Item: ", item)
+                    if(item.type == "table") {
+                        return (
+                            <div style={{ 'display': 'flex', 'flexDirection': 'column', 'width': '100%', "gap": "1.05vw", 'marginBottom': '2vw' }}>
+                                <div style={{ "display": "flex", "flexDirection": "row", "alignItems": "center", "padding": "2%", "gap": "10px", "background": "#DEF1FD", "borderRadius": "3px 3px 0px 0px", "flex": "none", "order": "0", "flexGrow": "0", "paddingRight": "8%", "justifyContent": "space-between" }}>
+                                    <div style={{ "fontFamily": "'Source Sans Pro'", "fontStyle": "normal", "fontWeight": "600", "fontSize": "1.3vw", "display": "flex", "alignItems": "center", "color": "#505664", "flexGrow": "15" }}>
+                                        {item.titles[0]}
+                                    </div>
+                                    <div style={{ "fontFamily": "'Source Sans Pro'", "fontStyle": "normal", "fontWeight": "600", "fontSize": "1.3vw", "display": "flex", "alignItems": "center", "color": "#505664", "flexGrow": "1", "justifyContent": "center" }}>
+                                        {item.titles[1]}
+                                    </div>
+                                </div>
+                                {item && binderList.table_data.map((row, index) => {
+                                    return (
+                                        <div style={{"display":"flex","flexDirection":"column","alignItems":"flex-start","padding":"0px","boxShadow":"1px 1px 5px 2px rgba(0, 0, 0, 0.1)"}}>
+                                            <div style={{"display":"flex","flexDirection":"row","justifyContent":"space-between","alignItems":"center","padding":"0px","gap":"64px", 'width': '100%'}}>
+                                                <div style={{"display":"flex","flexDirection":"row","alignItems":"center","padding":"0px","gap":"16px", 'padding':'1%', 'minWidth': '70%'}}>
+                                                    <Avatar size='4vw' radius='xl'/>
+                                                    <div style={{"display":"flex","flexDirection":"column"}}>
+                                                        <Text style={{'color': '#023047', 'fontSize':'1.63vw'}}>{item.rows[index].details[0].value}</Text>
+                                                        <Text style={{"color": "#505664", "fontSize":"1.05vw"}}>{item.rows[index].details[1].value}</Text>
+                                                    </div>
+                                                </div>
+                                                <div style={{"display":"flex","flexDirection":"row","alignItems":"center","padding":"0px","gap":"16px", 'flexGrow': '1', 'justifyContent':'space-evenly'}}>
+                                                    <Button 
+                                                        leftIcon={<BiPencil/>} 
+                                                        style={{"fontSize":'1.3vw', "backgroundColor":"#023047", 'height':'3.8vw', 'width':'8vw', "boxShadow":"1px 1px 5px 2px rgba(0, 0, 0, 0.1)"}}
+                                                        onClick = {() => {
+                                                            // btnClick(row)
+                                                            startFlow(row.main_binder_id)
+                                                        }}    
+                                                    >
+                                                        {item.rows[index].buttons[0]}
+                                                    </Button>
+                                                    <Button 
+                                                        style={{"fontSize":'1.3vw', "backgroundColor":"#ffffff", 'color':'#023047', 'height':'3.8vw', 'width':'3.8vw', "boxShadow":"1px 1px 5px 2px rgba(0, 0, 0, 0.1)"}}
+                                                        onClick = {(e) => {
+                                                            deleteKeyContact(row.contact_type_id, row.question_id, row.key_contact_id)
+                                                        }}
+                                                    >
+                                                        <BiTrash/>
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        )
+                    } else if (item.type == "button") {
+                        return (
+                            <div style={{ 'display': 'flex', 'flexDirection': 'row', 'width': '49%', "gap": "1.63vw", 'paddingRight': '1%' }}>
+                                <Button 
+                                    leftIcon={<BiPencil/>} 
+                                    style={{"boxShadow":"1px 1px 5px 2px rgba(0, 0, 0, 0.1)", 'backgroundColor':'white', 'color':'#023047', "fontSize":'1.3vw', 'height':'3.8vw'}}
+                                    onClick={() => {btnClick(); console.log("Btn click called")}}
+                                >
+                                    {item.text}
+                                </Button>
+                            </div>
+                        )
+                    }
+                })}
+            </div>}
+            {!loading && !listPage && <div style={{ "display": 'flex', 'flexDirection': 'row', 'justifyContent': 'space-between', 'alignContent': 'center' }}>
                 <div style={{ "display": "flex", "flexDirection": "row", "color": "#62697B", "fontSize": "1.63vw", "fontWeight": 600, 'alignItems': 'center' }}>
                     <RiPagesLine color="#62697B" size="1.63vw" />
                     Will
@@ -288,10 +400,10 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
                     {willFlow?.steps[counter]?.label}
                 </Text>}
             </div>}
-            {!loading && <div style={{ 'minWidth': '100%' }}>
+            {!loading && !listPage && <div style={{ 'minWidth': '100%' }}>
                 <FlowTitle title={willFlow?.steps[counter]?.title} discription={willFlow?.steps[counter]?.description} />
             </div>}
-            {!loading && <div style={{ "display": 'flex', "flexDirection": 'row', "paddingRight": '1%', "paddingBottom": '3vw', "flexWrap": "wrap", 'height': '40vw', 'alignContent': 'flex-start' }}>
+            {!loading && !listPage && <div style={{ "display": 'flex', "flexDirection": 'row', "paddingRight": '1%', "paddingBottom": '3vw', "flexWrap": "wrap", 'height': '40vw', 'alignContent': 'flex-start' }}>
                 {willFlow?.steps[counter]?.inputList.map((item, index) => {
                     return (
                         <InputControl
@@ -308,14 +420,14 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
                             prefill = {prefill}
                             setPrefill = {setPrefill}
                             btnClick = {btnClick}
-                            flowId = "200000001"
+                            flowId = "200000003"
                             willFlow = {{get: () => {return willFlow}, set: setWillFlow}}
                         />
                     )
                 })}
                 <div style={{ "width": "100%", "paddingBottom": "160px" }}></div>
             </div>}
-            {!modalStatus && !loading && <Affix
+            {!modalStatus && !loading && !listPage && <Affix
                 position={{ "bottom": 0, 'left': 270 }}
                 style={{ "width": '100%', "padding": '1vw', "backgroundColor": '#ffffff', 'height': '100px' }}
             >
@@ -377,4 +489,4 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
     )
 }
 
-export default WillFlow
+export default Trust

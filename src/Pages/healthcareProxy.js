@@ -11,17 +11,17 @@ import { getWillFlow, listBinderDetails } from '../apis/willFlowApis'
 import Footer from "../Component/footer";
 import BreadCrumbs from '../Component/breadCrumb'
 
-const WillFlow = ({ navigate, counter, setCounter }) => {
+const HealthcareProxy = ({ navigate, counter, setCounter }) => {
     const [modalMessage, setModalMessage] = useState({})
     const [modalStatus, setModalStatus] = useState(false)
+    const [willFlow, setWillFlow] = useState({})
     const [loading, setLoading] = useState(true)
     const [prevStep, setPrevStep] = useState(-1)
     const [beneficiaries, setBeneficiaries] = useState(true)
     const [executors, setExecutors] = useState(true)
     const [prefill, setPrefill] = useState()
     const [editMode, setEditMode] = useState(false)
-    const willFlowObj = require("../willFlow.json")
-    const [willFlow, setWillFlow] = useState(willFlowObj)
+    // const willFlow = require("../willFlow.json")
     const [answer, setAnswer] = useState()
     const [questionId, setQuestionId] = useState(false)
 
@@ -92,27 +92,26 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
             data.contact_type_id = editMode?.data?.contact_type_id
             data.key_contact_id = editMode?.data?.key_contact_id
         }
-        // setLoading(true)
-        // getWillFlow("200000001", data).then((response) => {
-        //     console.log("Api call success: ", response.data)
-        //     if (!step.lastStep) {
-        //         setPrevStep(counter)
-        //         setCounter(counter + 1)
-        //     } else {
-        //         navigate(-1)
-        //         setCounter(0)
-        //     }
-        //     setWillFlow(response.data)
-        //     setLoading(false)
-        //     setAnswer()
-        //     setEditMode(false)
-        // }, (error) => {
-        //     console.log("Error in API call: ", error)
-        //     setPrevStep(counter)
-        //     setCounter(counter + 1)
-        //     setLoading(false)
-        // })
-
+        setLoading(true)
+        getWillFlow("200000005", data).then((response) => {
+            console.log("Api call success: ", response.data)
+            if (!step.lastStep) {
+                setPrevStep(counter)
+                setCounter(counter + 1)
+            } else {
+                navigate(-1)
+                setCounter(0)
+            }
+            setWillFlow(response.data)
+            setLoading(false)
+            setAnswer()
+            setEditMode(false)
+        }, (error) => {
+            console.log("Error in API call: ", error)
+            setPrevStep(counter)
+            setCounter(counter + 1)
+            setLoading(false)
+        })
     }
 
     const submitNotes = (step) => {
@@ -143,25 +142,25 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
                 "answer": answer
             }
         }
-        // setLoading(true)
-        // getWillFlow("200000001", data).then((response) => {
-        //     console.log("Api call success: ", response.data)
-        //     if (!step.lastStep) {
-        //         setPrevStep(counter)
-        //         setCounter(counter + 1)
-        //     } else {
-        //         navigate(-1)
-        //         setCounter(0)
-        //     }
-        //     setWillFlow(response.data)
-        //     setLoading(false)
-        //     setAnswer()
-        // }, (error) => {
-        //     console.log("Error in API call: ", error)
-        //     setPrevStep(counter)
-        //     setCounter(counter + 1)
-        //     setLoading(false)
-        // })
+        setLoading(true)
+        getWillFlow("200000005", data).then((response) => {
+            console.log("Api call success: ", response.data)
+            if (!step.lastStep) {
+                setPrevStep(counter)
+                setCounter(counter + 1)
+            } else {
+                navigate(-1)
+                setCounter(0)
+            }
+            setWillFlow(response.data)
+            setLoading(false)
+            setAnswer()
+        }, (error) => {
+            console.log("Error in API call: ", error)
+            setPrevStep(counter)
+            setCounter(counter + 1)
+            setLoading(false)
+        })
     }
 
     const backBtnClick = (step) => {
@@ -193,23 +192,23 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
                 item.prefill = data[item.id]
             })
             console.log("Temp Object from btnCLick: ", temp.steps[counter-1].inputList)
-            // setWillFlow(temp)
+            setWillFlow(temp)
         }
     }
 
     useEffect(() => {
         setLoading(true)
-        // listBinderDetails("200000001").then((response) => {
-        //     console.log("Binder List for topic Id 200000002: ", response.data)
-        // }, (err) => {
-        //     console.log("Error in getting binder List")
-        // })
-        // getWillFlow("200000001").then((response) => {
-        //     console.log("Response of get willflow object: ", response.data)
-        //     setWillFlow(response.data)
-        // }, (error) => {
-        //     console.log("Error in getting willflow object: ", error)
-        // })
+        listBinderDetails("200000005").then((response) => {
+            console.log("Binder List for topic Id 200000002: ", response.data)
+        }, (err) => {
+            console.log("Error in getting binder List")
+        })
+        getWillFlow("200000005").then((response) => {
+            console.log("Response of get willflow object: ", response.data)
+            setWillFlow(response.data)
+        }, (error) => {
+            console.log("Error in getting willflow object: ", error)
+        })
     }, [])
 
     useEffect(() => {
@@ -218,9 +217,9 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
         }
     }, [willFlow])
 
-    // useEffect(() => {
-    //     console.log("Loading changed: ", loading, willFlow)
-    // }, [loading])
+    useEffect(() => {
+        console.log("Loading changed: ", loading, willFlow)
+    }, [loading])
 
     useEffect(() => {
         if(!loading) {
@@ -240,7 +239,7 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
             setPrevStep(counter-1)
         }
     }, [counter, loading])
-    
+
 
     if (loading) {
         return (
@@ -308,7 +307,7 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
                             prefill = {prefill}
                             setPrefill = {setPrefill}
                             btnClick = {btnClick}
-                            flowId = "200000001"
+                            flowId = "200000005"
                             willFlow = {{get: () => {return willFlow}, set: setWillFlow}}
                         />
                     )
@@ -377,4 +376,4 @@ const WillFlow = ({ navigate, counter, setCounter }) => {
     )
 }
 
-export default WillFlow
+export default HealthcareProxy

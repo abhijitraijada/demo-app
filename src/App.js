@@ -47,7 +47,7 @@ function App() {
           },
         }}
       >
-        {loggedIn ? <Home setLoggedIn = {setLoggedIn}/> : <Login setLoggedIn = {setLoggedIn}/>}
+        <Home setLoggedIn = {setLoggedIn}/>
       </MantineProvider>
     </Router>
   );

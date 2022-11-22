@@ -4,6 +4,7 @@ import { Button, LoadingOverlay } from '@mantine/core'
 import { BiPencil, BiTrash } from 'react-icons/bi'
 import Footer from "../Component/footer"
 import { addTopic, getDocList, deleteTopic } from "../apis/docListApi"
+import { ConfirmationModal } from "../Component/modal";
 
 const EssentialDocs = ({ navigate }) => {
     const essentialDocsJson = [
@@ -38,6 +39,38 @@ const EssentialDocs = ({ navigate }) => {
             'action': {'text': 'Add', 'clickAction':'Api call url'},
         }
     ]
+    const myTopics = [{
+        'name': 'Will',
+        'content': 'Note where your will is kept. Uploading the document, entering your list of beneficiaries and executors is your choice.',
+        'action': {'text': 'Start', 'clickAction':'Api call url'},
+    },
+    {
+        'name': 'Power of attorney',
+        'content': 'Note who can act for you in legal or financial matters.',
+        'action': {'text': 'Start', 'clickAction':'Api call url'},
+    },
+    {
+        'name': 'Trusts',
+        'content': 'Appoint another party to hold assets on behalf of one or more beneficiaries.',
+        'action': {'text': 'Start', 'clickAction':'Api call url'},
+    },]
+    const otherTopics = [{
+        'name': 'Living will',
+        'content': 'Note what medical treatments you would and would not want.',
+        'action': {'text': 'Add', 'clickAction':'Api call url'},
+    },
+    {
+        'name': 'Healthcare directive',
+        'content': 'Note who can make medical decisions for you.',
+        'action': {'text': 'Add', 'clickAction':'Api call url'},
+    },
+    {
+        'name': 'Add your own',
+        'content': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'action': {'text': 'Add', 'clickAction':'Api call url'},
+    }
+
+    ]
     const [loading, setLoading] = useState(true)
     const [docList, setDocList] = useState([
         {
@@ -71,46 +104,77 @@ const EssentialDocs = ({ navigate }) => {
             'action': 'add',
         }
     ])
-    const [myTopics, setMyTopics] = useState()
-    const [otherTopics, setOtherTopics] = useState()
+    // const [myTopics, setMyTopics] = useState()
+    // const [otherTopics, setOtherTopics] = useState()
+    const [modalMessage, setModalMessage] = useState({})
+    const [modalStatus, setModalStatus] = useState(false)
 
     useEffect(() => {
         console.log("Doc list changed ", docList)
-        setLoading(true)
-        getDocList().then((response) => {
-            console.log("DocList Api response: ", response.data)
-            setMyTopics(response.data.mytopics)
-            setOtherTopics(response.data.othertopics)
-            setLoading(false)
-        }, (error) => {
-            console.log("Error in get doc list: ", error)
-        })
+        setLoading(false)
+        // setLoading(true)
+        // getDocList().then((response) => {
+        //     console.log("DocList Api response: ", response.data)
+        //     setMyTopics(response.data.mytopics)
+        //     setOtherTopics(response.data.othertopics)
+        //     setLoading(false)
+        // }, (error) => {
+        //     console.log("Error in get doc list: ", error)
+        // })
     },[])
 
-    const addTopicBtn = (topicId) => {
-        setLoading(true)
-        addTopic(topicId).then((response) => {
-            console.log("Add topic response: ",response.data)
-            setMyTopics(response.data.mytopics)
-            setOtherTopics(response.data.othertopics)
-            setLoading(false)
-        }, (error) => {
-            console.log("Add topic response: ", error)
-            setLoading(false)
-        })
-    }
+    // const addTopicBtn = (topicId) => {
+    //     setLoading(true)
+    //     addTopic(topicId).then((response) => {
+    //         console.log("Add topic response: ",response.data)
+    //         setMyTopics(response.data.mytopics)
+    //         setOtherTopics(response.data.othertopics)
+    //         setLoading(false)
+    //     }, (error) => {
+    //         console.log("Add topic response: ", error)
+    //         setLoading(false)
+    //     })
+    // }
 
     const deleteTopicBtn = (topicId) => {
-        setLoading(true)
-        deleteTopic(topicId).then((response) => {
-            console.log("response data for delete topic: ", response.data)
-            setMyTopics(response.data.mytopics)
-            setOtherTopics(response.data.othertopics)
-            setLoading(false)
-        }, (error) => {
-            console.log("Error in delete Topic: ", error)
-            setLoading(false)
-        })
+        // setLoading(true)
+        // deleteTopic(topicId).then((response) => {
+        //     console.log("response data for delete topic: ", response.data)
+        //     setMyTopics(response.data.mytopics)
+        //     setOtherTopics(response.data.othertopics)
+        //     setLoading(false)
+        // }, (error) => {
+        //     console.log("Error in delete Topic: ", error)
+        //     setLoading(false)
+        // })
+    }
+
+    const showConfirmationModal = (topicName, topicId) => {
+        let temp = {
+            title: "Are you sure you want to delete " + topicName,
+            content: "Deleting this will result in permanent loss of data regarding " + topicName,
+            args:[topicId],
+            deleteAction: deleteTopicBtn
+        }
+        setModalMessage(temp)
+        setModalStatus(!modalStatus)
+    }
+
+    const startBtnCick = (topicId) => {
+        console.log("Start btn clicked with ID: ", topicId)
+        if (topicId == "200000001") {
+            navigate('/essentialDocs/willFlow')
+        } else if (topicId == "200000002") {
+            navigate('/essentialDocs/powerOfAttorney')
+        } else if (topicId == "200000003") {
+            navigate('/essentialDocs/trust')
+        } else if (topicId == "200000004") {
+            navigate('/essentialDocs/livingWill')
+        } else if (topicId == "200000005") {
+            navigate('/essentialDocs/healthcareProxy')
+        } else {
+            console.log("Default case, unrecognized id passed")
+        }
     }
 
     if (loading) {
@@ -120,6 +184,7 @@ const EssentialDocs = ({ navigate }) => {
     }
     return(
         <div style={{"display": 'flex', 'flexDirection': 'column', 'paddingRight': '2%'}}>
+            <ConfirmationModal modalMessage={modalMessage} status={modalStatus} setStatus={setModalStatus}/>
             <div style={{ "fontFamily":"'Source Sans Pro'", "fontStyle":"normal", "fontWeight":"700", "fontSize":"3.16vw", "display":"flex", "alignItems":"center", "color":"#023047"}}>
                Essential Documents
             </div>
@@ -152,7 +217,8 @@ const EssentialDocs = ({ navigate }) => {
                                             style={{'position': 'relative', 'right': '25%', "backgroundColor": "#023047", 'width': '142px', 'height': '57px', "fontFamily":"'Source Sans Pro'","fontStyle":"normal","fontWeight":"600","fontSize":"1.3vw","lineHeight":"100%" }}
                                             leftIcon={<BiPencil/>}
                                             onClick={(e) => {
-                                                navigate('/essentialDocs/willFlow')
+                                                // navigate('/essentialDocs/willFlow')
+                                                startBtnCick("200000001")
                                             }}
                                         >
                                             Start
@@ -164,7 +230,8 @@ const EssentialDocs = ({ navigate }) => {
                                                 setLoading(true)
                                                 setDocList([...tempList])
                                                 setLoading(false)
-                                                deleteTopicBtn(item.topic_id)
+                                                // deleteTopicBtn(item.topic_id)
+                                                showConfirmationModal(item.name, item.topic_id)
                                             }}
                                             style={{'position': 'relative', 'right': '15%', "backgroundColor": "#FFFFFF", "color": "#023047", 'width': '56px', 'height': '57px', "fontFamily":"'Source Sans Pro'","fontStyle":"normal","fontWeight":"600","fontSize":"1.3vw","lineHeight":"100%", "boxShadow":"1px 1px 5px 2px rgba(0, 0, 0, 0.1)","borderRadius":"4.62222px"}}
                                         >
@@ -208,7 +275,7 @@ const EssentialDocs = ({ navigate }) => {
                                                 setLoading(true)
                                                 setDocList([...tempList])
                                                 setLoading(false)
-                                                addTopicBtn(item.topic_id)
+                                                // addTopicBtn(item.topic_id)
                                             }}
                                             leftIcon={<BiPencil/>}
                                             style={{'position': 'relative', 'right': '3%', "backgroundColor": "#023047", 'width': '142px', 'height': '57px', "fontFamily":"'Source Sans Pro'","fontStyle":"normal","fontWeight":"600","fontSize":"1.3vw","lineHeight":"100%"}}

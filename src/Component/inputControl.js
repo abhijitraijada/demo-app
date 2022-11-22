@@ -7,17 +7,20 @@ import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone'
 import { BiTrash, BiPencil } from 'react-icons/bi'
 import { IoClose } from 'react-icons/io5'
 import { getWillFlow } from "../apis/willFlowApis";
+import { ConfirmationModal } from "./modal";
 
 const InputControl = ({ 
         data, handleButtonClick, step, 
         modalMessage, setModalMessage, modalStatus, 
         setModalStatus, setAnswer, answer, 
-        prefill, setPrefill, btnClick, willFlow
+        prefill, setPrefill, btnClick, flowId, willFlow
     }) => {
     const theme = useMantineTheme();
     const [dateError, setDateError] = useState()
     const [textInputError, setTextInputError] = useState()
     const fileRef = useRef()
+    const [confirmMessage, setConfirmMessage] = useState({})
+    const [confirmModalStatus, setConfirmModalStatus] = useState(false)
 
     switch (data.type) {
         case "yesNoButton":
@@ -69,13 +72,13 @@ const InputControl = ({
                     onClick={() => {
                         let temp = {
                             title: data.title,
-                            content: data.content
+                            content: data.text
                         }
                         setModalMessage(temp)
                         setModalStatus(!modalStatus)
                     }}
                 >
-                    <HiOutlineLightBulb color="#045C87" size='1.3vw' /> {data.text}
+                    <HiOutlineLightBulb color="#045C87" size='1.3vw' /> {data.title}
                 </div>
             )
         case "videoHint": 
@@ -84,14 +87,14 @@ const InputControl = ({
                     onClick={() => {
                         let temp = {
                             title: data.title,
-                            content: data.content,
+                            content: data.text,
                             url: data.videoUrl
                         }
                         setModalMessage(temp)
                         setModalStatus(!modalStatus)
                     }}
                 >
-                    <IoPlayOutline color="#045C87" size='1.3vw' /> {data.text}
+                    <IoPlayOutline color="#045C87" size='1.3vw' /> {data.title}
                 </div>
             )
         case 'fileUploader':
@@ -124,7 +127,7 @@ const InputControl = ({
                 // console.log("Data from dropzone: ", files)
                 // console.log("Data from ref: ", fileRef.current.firstChild.files)
                 // console.log("Data from html Element: ", document.getElementById("fileInputRef").firstChild.files)
-                getWillFlow(0,formData, true).then((response) => {
+                getWillFlow(flowId,formData, true).then((response) => {
                     console.log("Files upload response: ", response.data)
                 }, (error) => {
                     console.log("Files upload Error: ", error)
@@ -136,7 +139,7 @@ const InputControl = ({
                     "document_id": documentId,
                     "question_id": questionId
                 }
-                getWillFlow(0, data).then((response) => {
+                getWillFlow(flowId, data).then((response) => {
                     console.log("Delete document response: ", response.data)
                     willFlow.set(response.data)
                 }, (error) => {
@@ -340,27 +343,41 @@ const InputControl = ({
             )
         case 'table':
             const deleteKeyContact = (contactTypeId, questionId, keyContactId) => {
+                setModalStatus(!modalMessage)
                 let data = {
                     "DeleteKeyContact": "Delete",
                     "contact_type_id": contactTypeId,
                     "question_id": questionId,
                     "key_contact_id": keyContactId
                 }
-                getWillFlow(0, data).then((response) => {
+                console.log("Executinon to this point")
+                getWillFlow(flowId, data).then((response) => {
                     console.log("Delete contact success response: ", response.data)
                     willFlow.set(response.data)
                 }, (error) => {
                     console.log("Delete contact error: ", error)
                 })
+            }
+            const showConfirmModal = (contactTypeId, questionId, keyContactId, name, relation) => {
+                let temp = {
+                    title: "Are you sure you want to delete " + name,
+                    content: "Deleting this will result in permanent loss of data regarding " + name,
+                    args: [contactTypeId, questionId, keyContactId],
+                    deleteAction: deleteKeyContact
+                }
+                setModalStatus(!modalStatus)
+                setConfirmMessage(temp)
+                setConfirmModalStatus(!confirmModalStatus)
             } 
             return (
                 <div style={{ 'display': 'flex', 'flexDirection': 'column', 'width': '100%', "gap": "1.05vw", 'marginBottom': '2vw' }}>
+                    <ConfirmationModal modalMessage={confirmMessage} status={confirmModalStatus} setStatus={setConfirmModalStatus}/>
                     <div style={{ "display": "flex", "flexDirection": "row", "alignItems": "center", "padding": "2%", "gap": "10px", "background": "#DEF1FD", "borderRadius": "3px 3px 0px 0px", "flex": "none", "order": "0", "flexGrow": "0", "paddingRight": "8%", "justifyContent": "space-between" }}>
                         <div style={{ "fontFamily": "'Source Sans Pro'", "fontStyle": "normal", "fontWeight": "600", "fontSize": "1.3vw", "display": "flex", "alignItems": "center", "color": "#505664", "flexGrow": "15" }}>
-                            Name
+                            {data.titles[0]}
                         </div>
                         <div style={{ "fontFamily": "'Source Sans Pro'", "fontStyle": "normal", "fontWeight": "600", "fontSize": "1.3vw", "display": "flex", "alignItems": "center", "color": "#505664", "flexGrow": "1", "justifyContent": "center" }}>
-                            Action
+                            {data.titles[1]}
                         </div>
                     </div>
                     {data && step.table_data.map((item, index) => {
@@ -370,8 +387,8 @@ const InputControl = ({
                                     <div style={{"display":"flex","flexDirection":"row","alignItems":"center","padding":"0px","gap":"16px", 'padding':'1%', 'minWidth': '70%'}}>
                                         <Avatar size='4vw' radius='xl'/>
                                         <div style={{"display":"flex","flexDirection":"column"}}>
-                                            <Text style={{'color': '#023047', 'fontSize':'1.63vw'}}>{item.first_name} {item.last_name}</Text>
-                                            <Text style={{"color": "#505664", "fontSize":"1.05vw"}}>{item.relationship}</Text>
+                                            <Text style={{'color': '#023047', 'fontSize':'1.63vw'}}>{data.rows[index].details[0].value}</Text>
+                                            <Text style={{"color": "#505664", "fontSize":"1.05vw"}}>{data.rows[index].details[1].value}</Text>
                                         </div>
                                     </div>
                                     <div style={{"display":"flex","flexDirection":"row","alignItems":"center","padding":"0px","gap":"16px", 'flexGrow': '1', 'justifyContent':'space-evenly'}}>
@@ -380,12 +397,13 @@ const InputControl = ({
                                             style={{"fontSize":'1.3vw', "backgroundColor":"#023047", 'height':'3.8vw', 'width':'8vw', "boxShadow":"1px 1px 5px 2px rgba(0, 0, 0, 0.1)"}}
                                             onClick = {() => {btnClick(item)}}    
                                         >
-                                            Edit
+                                            {data.rows[index].buttons[0]}
                                         </Button>
                                         <Button 
                                             style={{"fontSize":'1.3vw', "backgroundColor":"#ffffff", 'color':'#023047', 'height':'3.8vw', 'width':'3.8vw', "boxShadow":"1px 1px 5px 2px rgba(0, 0, 0, 0.1)"}}
                                             onClick = {(e) => {
-                                                deleteKeyContact(item.contact_type_id, item.question_id, item.key_contact_id)
+                                                // deleteKeyContact(item.contact_type_id, item.question_id, item.key_contact_id)
+                                                showConfirmModal(item.contact_type_id, item.question_id, item.key_contact_id, data.rows[index].details[0].value, data.rows[index].details[1].value)
                                             }}
                                         >
                                             <BiTrash/>
