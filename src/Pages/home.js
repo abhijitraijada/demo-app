@@ -18,7 +18,7 @@ const Home = ({setLoggedIn}) => {
 
     useEffect(() => {
         navigate("/infoBinder")
-    })
+    }) 
 
     return(
         <div>
