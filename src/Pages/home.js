@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {useMantineTheme} from "@mantine/core"
 import Header from '../Component/header'
 import SideBar from "../Component/sidebar";
@@ -15,6 +15,11 @@ import HealthcareProxy from "./healthcareProxy";
 const Home = ({setLoggedIn}) => {
     const navigate = useNavigate()
     const [counter, setCounter] = useState(0)
+
+    useEffect(() => {
+        navigate("/infoBinder")
+    })
+
     return(
         <div>
             <Header/>
