@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useMantineTheme} from "@mantine/core"
 import Header from '../Component/header'
 import SideBar from "../Component/sidebar";
 import Footer from "../Component/footer";
@@ -6,7 +7,6 @@ import {Routes, Route, Outlet, useNavigate } from 'react-router-dom'
 import EssentialDocs from '../Pages/essentialDocs'
 import InfoBinder from '../Pages/infoBinder'
 import WillFlow from '../Pages/willFlow'
-import Test from '../Pages/test'
 import PowerOfAttorney from "./powerOfAttorney";
 import Trust from "./trust";
 import LivingWill from "./livingWill";
@@ -24,7 +24,6 @@ const Home = ({setLoggedIn}) => {
                     <div style={{ display: 'flex', flexDirection: 'column', alignContent: 'center', padding: 20}}>
                         <Routes>
                             <Route path="/infoBinder" element={<InfoBinder navigate={navigate}/>}/>
-                            <Route path="/test" element={<Test navigate={navigate}/>}/>
                             <Route path="/essentialDocs" element={<EssentialDocs navigate={navigate}/>}/>
                             <Route path="/essentialDocs/willFlow" element={<WillFlow navigate={navigate} counter = {counter} setCounter={setCounter}/>}/>
                             <Route path="/essentialDocs/powerOfAttorney" element={<PowerOfAttorney navigate={navigate} counter = {counter} setCounter={setCounter}/>}/>
